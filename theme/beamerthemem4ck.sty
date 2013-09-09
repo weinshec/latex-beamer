@@ -1,0 +1,333 @@
+% This style file is a combination of the four files required to create the FAA beamer theme.
+
+%		1. Inner
+%       2. Outer
+%    	3. Color
+%		4. Font
+
+% You can directly use this file instead of the using the other theme file "beamerthemeFractal.sty" and calling the 4 styles in the TeX document.
+
+
+%%% Defining the preamble
+\mode<presentation>
+\usepackage{pgfcomp-version-0-65}
+\usepackage{color}
+\usepackage{epstopdf}
+
+
+\setbeamersize{text margin left=5pt,text margin right=5pt}
+
+
+%%%%%%%%%%%%%%
+%%
+%%		Color theme
+%%
+%%%%%%%%%%%%%%
+
+\definecolor{Ftitle}{rgb}{0, 0, 0} % (rgb - 0, 0, 0) is nothing but black
+
+\definecolor{Descitem}{RGB}{0, 0, 139} % Darkish blue
+
+\definecolor{StdTitle}{RGB}{26, 33, 141}
+\definecolor{StdBody}{RGB}{213,24,0}
+
+\definecolor{AlTitle}{RGB}{255, 190, 190}
+\definecolor{AlBody}{RGB}{213,24,0}
+
+\definecolor{ExTitle}{RGB}{201, 217, 217}
+\definecolor{ExBody}{RGB}{213,24,0}
+
+\definecolor{myBlue}{RGB}{72,131,232}
+\definecolor{myGray}{RGB}{150,150,150}
+\definecolor{myLightBlue}{RGB}{248,248,255}
+
+
+
+%%%%%%
+% Assign colours to different constitutens of the presentation as per the requriements.
+%%%%%%
+
+% This sets the colour of the title of the presentation and titles of all the slides in the presentation to black.
+\setbeamercolor{frametitle}{fg = Ftitle}
+\setbeamercolor{Title}{fg = myBlue}
+\setbeamercolor{Titlepage}{fg = Ftitle}
+
+% In case you choose to display the Table of Contents, or the Outline slide.
+\setbeamercolor{section in toc}{fg = Ftitle}
+\setbeamercolor{section in toc shaded}{fg = Ftitle} 
+
+% The colour of all the items, subitems and and subsubitems are set to black.
+\setbeamercolor{item}{fg = myBlue}
+\setbeamercolor{subitem}{fg = myBlue}
+\setbeamercolor{subsubitem}{fg = myBlue}
+
+% This sets the color for each item heading of the description environment.
+\setbeamercolor{description item}{fg = Descitem}
+
+% NOTE: Setting the color black for all the items also sets in black for other environemnts like enumerate.
+
+% We also need to fix the colours for captions for figures and tables.
+\setbeamercolor{caption}{fg = Ftitle}
+\setbeamercolor{caption name}{fg = Ftitle}
+
+% In addition, we can also change the background colour of the slides depending on pur requirement.
+% \setbeamercolor{background canvas}{bg = blue!5}
+% We have commented out this command because this is just for illustrative purposes and has not been used to define the background colour of the slides.
+
+
+%%%%%%
+% Now, there are three types of boxes in beamer: 
+% 		1. Simple, or standard block, which can be invoked using definition or theorem
+%		2. Alert block
+%		3. Example block 
+% We will customize all these blocks based on our requirements
+
+
+% Standard block
+%\setbeamercolor{block body}{bg = StdLight}
+%\setbeamercolor{block title}{fg = black, bg = Std}
+
+\setbeamercolor{block title}{fg = Descitem, bg = StdTitle!15!white}
+\setbeamercolor{block body}{bg = myLightBlue}
+
+% Alert block
+\setbeamercolor{block title alerted}{bg = AlTitle}
+\setbeamercolor{block body alerted}{bg = AlBody!5!white}
+
+% Example block
+\setbeamercolor{block title example}{bg = ExTitle}
+\setbeamercolor{block body example}{bg = ExBody!5!white}
+
+
+%%%%%%
+% And one final thing, the colour of the text
+\setbeamercolor{normal text}{fg = Ftitle}
+
+
+
+
+%%%%%%%%%%%%%%
+%%
+%%		Font theme
+%%
+%%%%%%%%%%%%%%
+
+
+%%%%%%
+% Here we are using default fonts
+\usefonttheme{professionalfonts}
+
+% Font for the presentation title
+\setbeamerfont{Title}{size = \large}
+\setbeamerfont{Titlepage}{size = \large}
+
+% Font of the frame titles
+\setbeamerfont{frametitle}{size = \Large}
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%
+%%
+%%		Inner theme
+%%
+%%%%%%%%%%%%%%
+
+
+%%%%%%
+% Here we am using the rounded theme for the overall "feel" of the presentation. You can change the specific details by editing that particular option as we have done below.
+\useinnertheme{default}
+
+% Instead of rounded circles, we will use triangles as the indicator for items.
+\setbeamertemplate{itemize items}[triangle]
+
+% The default option for enumerate environment removes the circles around the numbers provided by the "rounded" inner theme. Just simple numbers remain.
+%\setbeamertemplate{enumerate items}[default]
+
+
+% Suppress "Figure n" labels in captions
+\setbeamertemplate{caption}{\insertcaption} \setbeamertemplate{caption label separator}{}
+
+% Define color table and wideitemize enviroments
+\newenvironment{colorTable} [1] {\begin{center}\rowcolors{2}{blue!25}{blue!10}\begin{tabular}{#1}\rowcolor{blue!50}} {\end{tabular}\end{center}}
+\newenvironment{wideitemize}{\itemize\addtolength{\itemsep}{10pt}}{\enditemize}
+
+
+%%%%%%%%%%%%%%
+%%
+%%		Outer theme
+%%
+%%%%%%%%%%%%%%
+
+
+%%%%%%
+% The outer theme takes the most amount of effort and time to customize. 
+
+
+%%%%%%
+% In the outer theme, we will try to do the following:
+%	1. Change the headline by putting a logo and a horizontal line
+%	2. Change the footline and include custom information depending on our requirements
+%	3. Organize the presentation title and the frame titles
+
+
+%%%%%%
+% Let's start with the headline. The approach that we plan to take for the headline and footline is similar.
+% We will first define a new command and then include the command in the \setbeamertemplate{} option. 
+% I tried a couple of approaches that would make the method more simple but could not come up with one. In case you do find a more aesthetic approach, please do send it accross. The contact information is on the top of the page.
+
+
+
+% First the horizontal line on the top portion of the slides
+% Add a horizontal line that runs from left of the slide to the right, just below the logo.  
+\newcommand{\LogoLine}{%
+  \raisebox{-12mm}[0pt][0pt]{%
+   	\begin{pgfpicture}{0mm}{0mm}{0mm}{0mm}
+    	 \pgfsetlinewidth{0.28mm}
+    	  \color{myBlue}
+      	\pgfline{\pgfpoint{5mm}{1mm}}{\pgfpoint{11.6cm}{1mm}}
+    \end{pgfpicture}
+  }
+}
+
+\newcommand{\LowLine}{%
+  \raisebox{3mm}[0pt][0pt]{%
+   	\begin{pgfpicture}{0mm}{0mm}{0mm}{0mm}
+    	 \pgfsetlinewidth{0.28mm}
+    	  \color{myGray}
+      	\pgfline{\pgfpoint{0mm}{1mm}}{\pgfpoint{12.8cm}{1mm}}
+    \end{pgfpicture}
+  }
+}
+
+% Include the line that we just created in the headline
+\setbeamertemplate{headline}[text line]{\LogoLine}
+
+
+% Now the logo. As it turns out. I could not include the logo in the headline. If I tried to, the headline kept shifting downwards.
+% Acting a little smart and lazy, I just included the logo in the right sidebar and shifted it up. 
+\setbeamertemplate{sidebar canvas right}{
+	\vspace*{3pt}\hspace*{-80pt}%
+		{\includegraphics[height=25pt]{JGU.pdf}}} 
+
+
+
+%%%%%
+% Now that we have changed the headline, we will need to orient the frame titles in a way that the come at the right stop just above the horizontal line.
+\setbeamertemplate{frametitle}{
+\vspace*{4mm}\hspace*{5mm}\insertframetitle}
+
+
+%%%%%
+% Like mentioned above, we will take a similar approach to customize the footline as well and inclued FAA in it.
+\newcommand{\Ffootline}{%
+  \color{myGray}
+  	\insertauthor % The left end of the footline
+  \hfill
+	\inserttitle % The center
+  \hfill
+    \hspace*{15mm}
+  	\insertframenumber/\inserttotalframenumber} % And the right end
+
+
+\setbeamertemplate{footline}{%
+  \usebeamerfont{structure}
+  	\begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex]{title in head/foot}%
+        \LowLine
+    	\Tiny\hspace*{4mm} \Ffootline \hspace{4mm}
+  	\end{beamercolorbox}}
+  	
+ 
+%%%%%%
+% We will also remove the navigation symbols, which I personally don't find very useful
+\setbeamertemplate{navigation symbols}{}
+
+
+%%%%%%
+% Now the toughest part--at least for me--customizing the title page.
+% Putting a logo on the title page and text beside it was quite a difficult task and to be fairly honest, my code is not effecient at all. At the very least, it is plain clumsy.
+% Though it does solve the purpose (I hate to use this phrase) it is neither "neat" nor "cool".
+% Anyway, let's see how we went about it.
+% For the title page, we needed a logo on the left, a vertical separater line, and finally a place for the title, author, date etc. 
+
+
+
+% First, let's create the line
+\newcommand{\TitleLine}{%
+  \raisebox{-12mm}[0pt][0pt]{%
+   	\begin{pgfpicture}{0mm}{0mm}{0mm}{0mm}
+    	 \pgfsetlinewidth{0.10mm}
+    	  \color{gray}
+      	\pgfline{\pgfpoint{55mm}{0mm}}{\pgfpoint{55mm}{50mm}}
+    \end{pgfpicture}}}
+
+
+
+% Now let's create commands for the title etc., that we can call later
+
+% Title
+\newcommand{\MyTitle}{%
+ 	\hspace*{60mm}\vspace{-25mm}
+  			\centering \inserttitle}
+  			
+% Subtitle  			
+\newcommand{\MySubTitle}{%
+	\hspace*{60mm}\vspace{-25mm}
+  		\centering	\footnotesize \textit{\insertsubtitle}}
+  		
+% Author   		
+ \newcommand{\MyAuthor}{ 		
+ 	\hspace*{60mm}\vspace{-25mm}
+		\centering \insertauthor}
+		
+% Institute		
+ \newcommand{\MyInstitute}{ 		
+ 	\hspace*{60mm}\vspace{-25mm}
+		\centering \footnotesize \textit{\insertinstitute}}
+
+% Date			
+ \newcommand{\MyDate}{		
+  	\hspace*{60mm}\vspace{-25mm}
+ 		\centering	\insertdate}
+  	
+% We declare the image that will be used as the logo
+\pgfdeclareimage[width = 0.2\paperwidth]{big}{JGU.pdf}
+
+% This is quite a complicated command. We basically create a "beamercolorbox" for each field and invoke the commands that we had created earlier.
+\setbeamertemplate{title page}{\TitleLine
+	\hspace*{11mm}\vspace*{-60mm}
+			\begin{beamercolorbox}[wd=0.5\paperwidth,ht=0.13\paperwidth]{Title}
+			\pgfuseimage{big}
+		\end{beamercolorbox}
+%		
+		\begin{beamercolorbox}[wd=\paperwidth,ht=0.06\paperwidth]{Title}
+		    \usebeamerfont{Title}%
+   	 		\MyTitle	
+		\end{beamercolorbox}
+%
+   		\begin{beamercolorbox}[wd=\paperwidth,ht=0.03\paperwidth]{Title}
+		    \usebeamerfont{Title}%
+   	 		\MySubTitle	
+ 		\end{beamercolorbox}
+%
+ 		\begin{beamercolorbox}[wd=\paperwidth,ht=0.06\paperwidth]{Titlepage}
+    		\usebeamerfont{Titlepage}%
+   			 \MyAuthor	
+  		\end{beamercolorbox}
+%
+   		\begin{beamercolorbox}[wd=\paperwidth,ht=0.03\paperwidth]{Titlepage}
+		    \usebeamerfont{head/foot}%
+   	 		\MyInstitute
+		\end{beamercolorbox}
+% 
+   		\begin{beamercolorbox}[wd=\paperwidth,ht=0.07\paperwidth]{Titlepage}
+		    \usebeamerfont{Titlepage}%
+		   	 \MyDate
+		\end{beamercolorbox}}
+
+
+\mode
+<all>  	  
