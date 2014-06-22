@@ -247,6 +247,19 @@
 
 
 %%%%%%
+% Define custom commands for backupslides
+\newcommand{\backupbegin}{
+   \newcounter{lastframenumber}
+   \setcounter{lastframenumber}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \addtocounter{lastframenumber}{-\value{framenumber}}
+   \addtocounter{framenumber}{\value{lastframenumber}} 
+}
+
+
+
+%%%%%%
 % Now the toughest part--at least for me--customizing the title page.
 % Putting a logo on the title page and text beside it was quite a difficult task and to be fairly honest, my code is not effecient at all. At the very least, it is plain clumsy.
 % Though it does solve the purpose (I hate to use this phrase) it is neither "neat" nor "cool".
