@@ -1,0 +1,58 @@
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 3.
+
+\mode<presentation>
+
+\newif\ifbeamer@secheader
+\beamer@secheaderfalse
+
+\DeclareOptionBeamer{secheader}{\beamer@secheadertrue}
+\ProcessOptionsBeamer
+
+\useoutertheme{bunsen}
+\include{macros}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% COLOR DEFINITIONS
+%
+\usepackage{color}
+\definecolor{uipaleblue}{RGB}{96,123,139}
+% \definecolor{uipoppy}{RGB}{225, 64, 5}
+\definecolor{uipoppy}{RGB}{42, 104, 181}
+\definecolor{uiblack}{RGB}{0, 0, 0}
+\setbeamercolor{title}{fg=uipaleblue}
+\setbeamercolor{block}{fg=uipoppy}
+\setbeamercolor{block title}{fg=uipoppy} % adjust title color to poppy
+\setbeamercolor{block item}{fg=uipoppy}
+\setbeamercolor{itemize item}{fg=uipoppy} % adjusts the bullet color
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% INNER THEME
+%
+
+% caption styling
+\DeclareCaptionFont{uiblack}{\color{uiblack}}
+\DeclareCaptionFont{uipoppy}{\color{uipoppy}}
+\captionsetup{labelfont={uipoppy},textfont=uiblack}
+\setbeamercolor{caption}{fg = uiblack}
+\setbeamercolor{caption name}{fg = uipoppy}
+\setbeamercolor{item}{fg = uipoppy}
+\setbeamercolor{subitem}{fg = uipoppy}
+\setbeamercolor{subsubitem}{fg = uipoppy}
+
+\usesubitemizeitemtemplate{%
+    \tiny\raise1.5pt\hbox{\color{beamerstructure}$\blacktriangleright$}%
+}
+\usesubsubitemizeitemtemplate{%
+    \tiny\raise1.5pt\hbox{\color{beamerstructure}$\bigstar$}%
+}
+
+\setbeamersize{text margin left=1em,text margin right=1em}
+
+\ifbeamer@secheader\else\setbeamertemplate{headline}[default]\fi
+
+\mode
+<all>

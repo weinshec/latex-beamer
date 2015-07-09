@@ -1,0 +1,55 @@
+\documentclass{beamer}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{hyperref}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs, caption}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{siunitx}
+\sisetup{exponent-product = \cdot}
+
+\input{theme/feynman}
+
+\mode<presentation>
+{%
+	\usetheme{bunsen}
+	\setbeamercovered{transparent = invisible}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title[Short Title]{Long Title}
+\subtitle{Subtitle}
+\author{Christoph Weinsheimer}
+\institute[Uni Mainz]
+{%
+    Johannes Gutenberg-University Mainz
+}
+\date{Spring 2015}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\myTitlePage{JGU.pdf}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Example}
+
+\begin{frame}{Example Frame}
+  \begin{block}{Example Block}
+    \begin{wideitemize}
+      \item Bullet Point 1
+      \item another one
+    \end{wideitemize}
+  \end{block}
+\end{frame}
+
+
+\end{document}

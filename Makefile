@@ -2,18 +2,15 @@
 ##                           general path settings
 ##################################################
 
-PROJECT   = main
+NAME      = main
 
 PWD       = ${shell pwd}
-INPUT     = ${PWD}/tex
-IMG       = ${PWD}/plots
+IMG       = ${PWD}/img
 THEME     = ${PWD}/theme
 
 TEMP      = ${PWD}/temp
-OUT       = ${TEMP}/out
-CONVIMG   = ${TEMP}/img
 
-export TEXINPUTS := ${TEXINPUTS}:${INPUT}:${THEME}:${CONVIMG}
+export TEXINPUTS := ${TEXINPUTS}:${THEME}:${TEMP}:${IMG}
 
 
 
@@ -22,10 +19,10 @@ export TEXINPUTS := ${TEXINPUTS}:${INPUT}:${THEME}:${CONVIMG}
 ##################################################
 
 EPS := $(wildcard ${IMG}/*.eps)
-EPS2PDF := $(patsubst ${IMG}/%.eps,${CONVIMG}/%.pdf,$(EPS))
+EPS2PDF := $(patsubst ${IMG}/%.eps,${TEMP}/%.pdf,$(EPS))
 
-${CONVIMG}/%.pdf: ${IMG}/%.eps
-	inkscape --without-gui --file=$< --export-pdf=${CONVIMG}/$*.pdf 
+${TEMP}/%.pdf: ${IMG}/%.eps
+	inkscape --without-gui --file=$< --export-pdf=${TEMP}/$*.pdf 
 
 
 
@@ -33,14 +30,12 @@ ${CONVIMG}/%.pdf: ${IMG}/%.eps
 ##                              build instructions
 ##################################################
 
-all: ${INPUT}/${PROJECT}.tex ${EPS2PDF}
-	pdflatex -output-directory ${OUT} $<
-	pdflatex -output-directory ${OUT} $<
-	cp ${OUT}/${PROJECT}.pdf ${PWD}
+all: ${NAME}.tex ${EPS2PDF}
+	pdflatex -output-directory ${TEMP} $<
+	pdflatex -output-directory ${TEMP} $<
+	cp ${TEMP}/${NAME}.pdf ${PWD}
 
 clean:
-	rm -rf ${OUT}/*
-	if [ -a ${PROJECT}.pdf ] ; then rm ${PROJECT}.pdf ; fi;
+	rm -rf ${TEMP}/*
+	if [ -a ${NAME}.pdf ] ; then rm ${NAME}.pdf ; fi;
 
-reset: clean
-	rm -rf ${CONVIMG}/*

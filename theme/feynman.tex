@@ -1,0 +1,241 @@
+\usepackage{amsmath,tikz}
+
+% FEYNMAN TIKZ 
+\usetikzlibrary{arrows}
+\usetikzlibrary{positioning}               % For "above of=" commands
+\usetikzlibrary{calc,through}              % For coordinates
+\usetikzlibrary{decorations.pathreplacing} % For curly braces
+\usetikzlibrary{decorations.pathmorphing}  % For Feynman Diagrams
+\usetikzlibrary{decorations.markings}
+
+% style definition
+\tikzset{%
+          >=latex', %%  Uncomment for more conventional arrows
+    vertex/.style={circle,fill,inner sep=0mm, minimum size=4pt},
+    blob/.style  ={circle,draw,inner sep=0mm, minimum size=30pt},
+    vector/.style={decorate, decoration={snake}, draw},
+    provector/.style={decorate, decoration={snake,amplitude=2.5pt}, draw},
+    antivector/.style={decorate, decoration={snake,amplitude=-2.5pt}, draw},
+    fermion/.style={draw=black, postaction={decorate},
+        decoration={markings,mark=at position 0.60 with {\arrow[draw=black]{>}}}},
+    fermionbar/.style={draw=black, postaction={decorate},
+        decoration={markings,mark=at position 0.60 with {\arrow[draw=black]{<}}}},
+    fermionnoarrow/.style={draw=black},
+    gluon/.style={decorate, draw=black,
+        decoration={coil,amplitude=4pt, segment length=5pt}},
+    scalar/.style={dashed,draw=black, postaction={decorate},
+        decoration={markings,mark=at position 0.60 with {\arrow[draw=black]{>}}}},
+    scalarbar/.style={dashed,draw=black, postaction={decorate},
+        decoration={markings,mark=at position 0.60 with {\arrow[draw=black]{<}}}},
+    scalarnoarrow/.style={dashed,draw=black},
+    electron/.style={draw=black, postaction={decorate},
+        decoration={markings,mark=at position 0.60 with {\arrow[draw=black]{>}}}},
+    bigvector/.style={decorate, decoration={snake,amplitude=4pt}, draw},
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% EXAMPLES
+%
+
+%             \begin{tikzpicture}[line width=1.5 pt, scale=1.5]
+%                 \node[vertex]     (v1) at (0,0) {}; % umistnit vertexi na platne
+%                 \node[vertex]     (v2) at (1,0) {};
+%                 \draw[fermion]    (v1) -- ++(140:1); % vstupni nozicka (trosku hack protoze vychazi z v1 a ne vstupuje
+%                 \draw[fermionbar] (v1) -- ++(220:1);
+%                 \draw[vector]     (v1) -- (v2); % intermedialni bozon z jednoho vertexu do druheho
+%                 \draw[fermion]    (v2) -- ++(40:1); % vystupni nozicka
+%                 \draw[fermionbar] (v2) -- ++(-40:1);
+%                 \node at (0.5,0.5) {$Z/\gamma/W$};
+%                 \node at (0.5,1) {d\v rel Jan a dablj\r u};
+%             \end{tikzpicture}
+%             \begin{tikzpicture}[line width=1.5 pt, scale=1.5]
+%                 \node[vertex]     (v1) at (0,0) {};
+%                 \node[vertex]     (v2) at (1,0) {};
+%                 \draw[fermion]    (v1) -- ++(140:1);
+%                 \draw[fermionbar] (v1) -- ++(220:1);
+%                 \draw[vector]     (v1) -- (v2);
+%                 \draw[vector]     (v2) -- ++(40:1);
+%                 \draw[vector]     (v2) -- ++(-40:1);
+%                 \node at (0.5,0.5) {$Z/\gamma$};
+%                 \node[right] at ($(v2)+(40:1)$) {$W$};
+%                 \node[right] at ($(v2)+(-40:1)$) {$W$};
+%                 \node at (0.5,1) {troj-cejchovac\'i vazba};
+%             \end{tikzpicture}
+%             \begin{tikzpicture}[line width=1.5 pt, scale=1.5]
+%                 \node[vertex]     (v1) at (0,0) {};
+%                 \node[vertex]     (v2) at (0,1) {};
+%                 \draw[fermion]    (v1) -- ++(180:1);
+%                 \draw[fermionbar] (v2) -- ++(180:1);
+%                 \draw[fermion]    (v2) -- (v1);
+%                 \draw[vector]     (v1) -- ++(0:1);
+%                 \draw[vector]     (v2) -- ++(0:1);
+%                 \node[left] at (-1,1) {$f$};
+%                 \node[left] at (-1,0) {$\bar f$};
+%                 \node[right] at (1,1) {$Z$};
+%                 \node[right] at (1,0) {$W$};
+%                 \node at (0.0,1.5) {\v cajov\'y kan\'al};
+%             \end{tikzpicture}
+%             \begin{tikzpicture}[line width=1.5 pt, scale=1.5]
+%                 \node[vertex]     (v1) at (0,1) {};
+%                 \node[vertex]     (v2) at (0,0) {};
+%                 \draw[fermionbar] (v1) -- ++(180:1);
+%                 \draw[fermion]    (v2) -- ++(180:1);
+%                 \draw[fermion]    (v1) -- (v2);
+%                 \draw[vector]     (v1) -- ++(-40:1.5);
+%                 \draw[vector]     (v2) -- ++(40:1.5);
+%                 \node[left] at (-1,1) {$f$};
+%                 \node[left] at (-1,0) {$\bar f$};
+%                 \node at (0.0,1.5) {ty kan\'ale!};
+%             \end{tikzpicture}
+%             \begin{tikzpicture}[line width=1.5 pt, scale=1.5]
+%                 \node[vertex]     (v1) at (0,0.6) {};
+%                 \node[vertex]     (v2) at (0,0) {};
+%                 \node[vertex]     (v3) at (0.6,0) {};
+%                 \node[vertex]     (v4) at (0.6,0.6) {};
+
+%                 \draw[fermion]    (v1) -- (v2);
+%                 \draw[fermion]    (v2) -- (v3);
+%                 \draw[fermion]    (v3) -- (v4);
+%                 \draw[fermion]    (v4) -- (v1);
+
+%                 \draw[gluon]      (v1) -- ++(140:1);
+%                 \draw[gluon]      (v2) -- ++(220:1);
+
+%                 \draw[vector]     (v3) -- ++(-40:1);
+%                 \draw[vector]     (v4) -- ++(40:1);
+
+%                 \node[above] at ($(v3)+(-34:1)$) {$W$};
+%                 \node[below] at ($(v4)+( 34:1)$) {$W$};
+
+%                 \node[above] at ($(v2)+(214:1)$) {$g$};
+%                 \node[below] at ($(v1)+(146:1)$) {$g$};
+%             \end{tikzpicture}
+
+%             \begin{tikzpicture}[line width=1.5 pt, scale=1.5]
+%                 \node[vertex]     (v1) at (0,0.8) {};
+%                 \node[vertex]     (v2) at (0,0.2) {};
+%                 \node[vertex]     (v3) at (0.5,0.5) {};
+%                 \node[vertex,color=red]     (v4) at (1.2,0.5) {};
+
+%                 \draw[fermion]    (v1) -- (v2);
+%                 \draw[fermion]    (v2) -- (v3);
+%                 \draw[fermion]    (v3) -- (v1);
+%                 \draw[vector]     (v3) -- (v4);
+
+%                 \draw[gluon]      (v1) -- ++(120:1);
+%                 \draw[gluon]      (v2) -- ++(240:1);
+
+%                 \draw[vector]     (v4) -- ++(-60:1);
+%                 \draw[vector]     (v4) -- ++(60:1);
+
+%                 \node[above] at ($(v4)+(-52:1)$) {$W$};
+%                 \node[below] at ($(v4)+( 52:1)$) {$W$};
+
+%                 \node        at ($(v3)+(0.4,0.3)$) {$Z/\gamma$};
+
+%                 \node[right] at ($(v4)+(0.3,0.0)$) {TGC vertex};
+
+%                 \node[above] at ($(v2)+(232:1)$) {$g$};
+%                 \node[below] at ($(v1)+(128:1)$) {$g$};
+%             \end{tikzpicture}
+
+
+%             % Honza si udelal ucet na battlenet a masti karty, takze celou dobu posloucham jenom `Caz' Dingo!!!!', 'I hope you like my invections' a 'WrrrgghlWrrggglgz'
+%             % takze si dal kolu a zustal tady celou noc, nad ranem se asi popereme o misto na zidli.
+
+%             % Jo jinak jak jsem ti rikal ze jsem prisel na to jak udelat ten dummy vector, tak to nefunguje nicmene jsem to udelal systemem BRUTEFORCE.
+%             % Takze kazdy typ ma svoji dummy v Eventu a vectory maji 100 itemu.. zatim lepsi nez nic.
+
+%             % udelal jsem novy styl blob, v obrazku si ho muze vybarvit jak chces. DPI byl trochu tezsi ale zvladl jsem to
+
+
+%             \begin{tikzpicture}
+%                 \node[blob,fill=black!20!white] (b1) at (-1, 1.5) {};
+%                 \node[blob,fill=black!20!white] (b2) at (-1,-1.5) {};
+%                 \node[blob,fill=black!20!white] (b3) at ( 1, 0  ) {};
+
+%                 \coordinate (o1) at ($(b1)+(180:1.5)$);
+%                 \coordinate (o2) at ($(b2)+(180:1.5)$);
+%                 \coordinate (o3) at ($(b3)+( 30:1.5)$);
+%                 \coordinate (o4) at ($(b3)+(-30:1.5)$);
+
+%                 \draw[fermionnoarrow, very thick] (o1) -- (b1);
+%                 \draw[fermionnoarrow]             (b1) -- ++( 15:1.2);
+%                 \draw[fermionnoarrow]             (b1) -- ++(  0:1.2);
+%                 \draw[fermionnoarrow]             (b1) -- ++(-15:1.2);
+
+%                 \draw[fermionnoarrow, very thick] (o2) -- (b2);
+%                 \draw[fermionnoarrow]             (b2) -- ++( 15:1.2);
+%                 \draw[fermionnoarrow]             (b2) -- ++(  0:1.2);
+%                 \draw[fermionnoarrow]             (b2) -- ++(-15:1.2);
+
+%                 \draw[fermionnoarrow] (b1) -- (b3);
+%                 \draw[fermionnoarrow] (b2) -- (b3);
+
+%                 \draw[fermion       ] (b3) -- (o3);
+%                 \draw[fermion       ] (b3) -- (o4);
+
+%                 \node[below] at (o1) {p};
+%                 \node[above] at (o2) {p};
+%                 \node at (0, 0.5) {i};
+%                 \node at (0,-0.5) {j};
+%                 \node[above] at (o3) {a};
+%                 \node[below] at (o4) {b};
+
+%             \end{tikzpicture}
+
+%             \begin{tikzpicture}
+%                 %blobs
+%                 \node[blob,fill=black!20!white] (b1) at (-1, 1.5) {};
+%                 \node[blob,fill=black!20!white] (b2) at (-1,-1.5) {};
+%                 \node[blob,fill=black!20!white] (b3) at ( 1, 0.7) {};
+%                 \node[blob,fill=black!20!white] (b4) at ( 1,-0.7) {};
+
+%                 %outer
+%                 \coordinate (o1) at ($(b1)+(180:1.5)$);
+%                 \coordinate (o2) at ($(b2)+(180:1.5)$);
+%                 \coordinate (o3) at ($(b3)+( 20:1.5)$);
+%                 \coordinate (o4) at ($(b3)+(-20:1.5)$);
+%                 \coordinate (o5) at ($(b4)+( 20:1.5)$);
+%                 \coordinate (o6) at ($(b4)+(-20:1.5)$);
+
+%                 %inner
+%                 \coordinate (i1) at ($ (b1)!.5!(b3) $);
+%                 \coordinate (i2) at ($ (b2)!.5!(b3) $);
+%                 \coordinate (i3) at ($ (b1)!.5!(b4) $);
+%                 \coordinate (i4) at ($ (b2)!.5!(b4) $);
+
+%                 \draw[fermionnoarrow, very thick] (o1) -- (b1);
+%                 \draw[fermionnoarrow]             (b1) -- ++( 35:1.2);
+%                 \draw[fermionnoarrow]             (b1) -- ++( 20:1.2);
+%                 \draw[fermionnoarrow]             (b1) -- ++(  5:1.2);
+
+%                 \draw[fermionnoarrow, very thick] (o2) -- (b2);
+%                 \draw[fermionnoarrow]             (b2) -- ++( -5:1.2);
+%                 \draw[fermionnoarrow]             (b2) -- ++(-20:1.2);
+%                 \draw[fermionnoarrow]             (b2) -- ++(-35:1.2);
+
+%                 \draw[fermionnoarrow] (b1) -- (b3);
+%                 \draw[fermionnoarrow] (b2) -- (b3);
+%                 \draw[fermionnoarrow] (b1) -- (b4);
+%                 \draw[fermionnoarrow] (b2) -- (b4);
+
+%                 \draw[fermion       ] (b3) -- (o3);
+%                 \draw[fermion       ] (b3) -- (o4);
+%                 \draw[fermion       ] (b4) -- (o5);
+%                 \draw[fermion       ] (b4) -- (o6);
+
+%                 \node[below] at (o1) {p};
+%                 \node[above] at (o2) {p};
+                 
+%                 \node[above] at (i1) {i};
+%                 \node[above] at (i2) {j};
+%                 \node[above] at (i3) {k};
+%                 \node[above] at (i4) {l};
+
+%                 \node[above] at (o3) {a};
+%                 \node[above] at (o4) {b};
+%                 \node[below] at (o5) {c};
+%                 \node[below] at (o6) {d};
+
+%             \end{tikzpicture}
