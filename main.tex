@@ -15,7 +15,8 @@
 \mode<presentation>
 {%
 	\usetheme{bunsen}
-	\setbeamercovered{transparent = invisible}
+    \setcounter{showProgressBar}{1}
+    \setcounter{showSlideNumbers}{1}
 }
 
 
@@ -35,7 +36,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 
-\myTitlePage{JGU.pdf}
+%\myTitlePage{JGU.pdf}
+\maketitle
 
 
 
@@ -43,13 +45,41 @@
 \section{Example}
 
 \begin{frame}{Example Frame}
-  \begin{block}{Example Block}
-    \begin{wideitemize}
-      \item Bullet Point 1
-      \item another one
-    \end{wideitemize}
-  \end{block}
+  \begin{columns}
+    \column{0.5\textwidth}
+      \begin{block}{Example Block}
+        \begin{wideitemize}
+          \item Bullet Point 1
+            \begin{itemize}
+              \item And some sub item
+            \end{itemize}
+          \item another one
+        \end{wideitemize}
+        \begin{enumerate}
+          \item Enumeration
+            \begin{enumerate}
+              \item Subenumeration
+            \end{enumerate}
+        \end{enumerate}
+      \end{block}
+    \column{0.5\textwidth}
+      \begin{figure}[ht]
+        \centering
+        \includegraphics[width=0.9\textwidth]{JGU.pdf}
+        \caption{Logo of the university}
+      \end{figure}
+  \end{columns}
 \end{frame}
+
+
+
+\begin{frame}{Another Slide}
+  \begin{center}
+    foobar
+  \end{center}
+\end{frame}
+
+
 
 
 \end{document}

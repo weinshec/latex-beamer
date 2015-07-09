@@ -1,58 +1,215 @@
-% This program can be redistributed and/or modified under the terms
-% of the GNU Public License, version 3.
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                       GENERAL
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \mode<presentation>
+
+\usepackage{color}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\include{macros}
+
+\setbeamercovered{transparent = invisible}
+
+\usepackage[none]{hyphenat}
 
 \newif\ifbeamer@secheader
 \beamer@secheaderfalse
-
 \DeclareOptionBeamer{secheader}{\beamer@secheadertrue}
 \ProcessOptionsBeamer
 
-\useoutertheme{bunsen}
-\include{macros}
+%\usepackage{fontspec}
+%\defaultfontfeatures{Ligatures=TeX}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% COLOR DEFINITIONS
-%
-\usepackage{color}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                             COLOR DEFINITIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{myBlue}{RGB}{72,131,232}
+\definecolor{myRed}{RGB}{230,37,52}
+\definecolor{myOrange}{RGB}{255,156,0}
+\definecolor{myBlack}{RGB}{43,40,40}
+\definecolor{myBlue2}{RGB}{22,190,207}
+\definecolor{myWhite}{RGB}{255,255,243}
+\definecolor{myGray}{RGB}{107,110,108}
+
 \definecolor{uipaleblue}{RGB}{96,123,139}
-% \definecolor{uipoppy}{RGB}{225, 64, 5}
 \definecolor{uipoppy}{RGB}{42, 104, 181}
 \definecolor{uiblack}{RGB}{0, 0, 0}
-\setbeamercolor{title}{fg=uipaleblue}
-\setbeamercolor{block}{fg=uipoppy}
-\setbeamercolor{block title}{fg=uipoppy} % adjust title color to poppy
-\setbeamercolor{block item}{fg=uipoppy}
-\setbeamercolor{itemize item}{fg=uipoppy} % adjusts the bullet color
+\definecolor{uipaleblue}{RGB}{96,123,139}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% INNER THEME
-%
 
-% caption styling
-\DeclareCaptionFont{uiblack}{\color{uiblack}}
-\DeclareCaptionFont{uipoppy}{\color{uipoppy}}
-\captionsetup{labelfont={uipoppy},textfont=uiblack}
-\setbeamercolor{caption}{fg = uiblack}
-\setbeamercolor{caption name}{fg = uipoppy}
-\setbeamercolor{item}{fg = uipoppy}
-\setbeamercolor{subitem}{fg = uipoppy}
-\setbeamercolor{subsubitem}{fg = uipoppy}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                   INNER THEME
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\setbeamersize{text margin left=1em,text margin right=1em}
 
-\usesubitemizeitemtemplate{%
-    \tiny\raise1.5pt\hbox{\color{beamerstructure}$\blacktriangleright$}%
-}
-\usesubsubitemizeitemtemplate{%
-    \tiny\raise1.5pt\hbox{\color{beamerstructure}$\bigstar$}%
+\setbeamercolor{enumerate item}   {fg=myBlue}
+\setbeamercolor{enumerate subitem}{fg=myOrange}
+\setbeamercolor{alerted text}     {fg=myBlue}
+\setbeamercolor{section in toc}   {fg=myBlack}
+\setbeamercolor{block title}      {fg=myBlue}
+\setbeamercolor{caption}          {fg=myGray}
+
+\setbeamertemplate{itemize item}{
+    \tikz{
+        \draw[fill=myBlue,draw=none] (0, 0) rectangle(0.1, 0.1);
+        \draw[fill=myBlue,draw=none] (0.1, 0.1) rectangle(0.2, 0.2);
+        \draw[fill=myBlue,draw=none] (0, 0.2) rectangle(0.1, 0.3);
+    }
 }
 
-\setbeamersize{text margin left=1em,text margin right=1em}
+\setbeamertemplate{itemize subitem}{
+    \tikz{
+        \draw[fill=myOrange,draw=none] (0, 0) rectangle(0.075, 0.075);
+        \draw[fill=myOrange,draw=none] (0.075, 0.075) rectangle(0.15, 0.15);
+        \draw[fill=myOrange,draw=none] (0, 0.15) rectangle(0.075, 0.225);
+    }
+}
 
-\ifbeamer@secheader\else\setbeamertemplate{headline}[default]\fi
+\setbeamerfont{itemize/enumerate body}{size=\large}
+\setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\small}
 
-\mode
-<all>
+\setbeamertemplate{caption}{\tiny\insertcaption}
+\setbeamertemplate{caption label separator}{}
+
+\setbeamertemplate{navigation symbols}{}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                        FOOTER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \defbeamertemplate*{footline}{bunsentheme}
+% {
+%   \leavevmode%
+%   \hbox{%
+%   \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.25ex,dp=1ex,center]{section in footer}%
+%     \insertshorttitle
+%   \end{beamercolorbox}%
+%   \begin{beamercolorbox}[wd=.34\paperwidth,ht=2.25ex,dp=1ex,center]{subsection in footer}%
+%     \insertsectionhead
+%   \end{beamercolorbox}%
+%   \begin{beamercolorbox}[wd=.34\paperwidth,ht=2.25ex,dp=1ex,center]{pagenumber in footer}%
+%    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+%   \end{beamercolorbox}}%
+%   \vskip0pt%
+% }
+
+% \setbeamersize{text margin left=1em,text margin right=1em}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                       COUNTER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{showProgressBar}
+\setcounter{showProgressBar}{1}
+\newcounter{showSlideNumbers}
+\setcounter{showSlideNumbers}{1}
+
+\makeatletter
+\newcount\progressbar@tmpcounta % auxiliary counter
+\newcount\progressbar@tmpcountb % auxiliary counter
+\newdimen\progressbar@pbwidth   % progressbar width
+\newdimen\progressbar@tmpdim    % auxiliary dimension
+
+\progressbar@pbwidth=12.8cm
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                   OUTER THEME
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamertemplate{title page}{}
+\setbeamertemplate{frametitle}{}
+
+\setbeamertemplate{background}{
+  
+  % caluclations for the progressbar
+  \progressbar@tmpcounta=\insertframenumber
+  \progressbar@tmpcountb=\inserttotalframenumber
+  \progressbar@tmpdim=\progressbar@pbwidth
+  \multiply\progressbar@tmpdim by \progressbar@tmpcounta
+  \divide\progressbar@tmpdim by \progressbar@tmpcountb
+
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+
+    %
+    % background color
+    %
+    \fill[color=myWhite] (0,0) rectangle(12.8cm,9.6cm);
+    
+    %
+    % the title page
+    %
+    \ifnum\thepage=1\relax
+      % draw the fills
+      \fill[color=myBlue] (0, 4cm) rectangle(12.8cm, 9.6cm);
+
+      % draw the actual text
+      \node[anchor=south,text width=11.8cm,inner xsep=0.5cm] at (6.4cm,4cm)
+        {\color{myWhite}\Huge\textbf{\inserttitle}};
+      \node[anchor=north east,text width=11.8cm,align=right] at (12.3cm,4cm)
+        {\color{myBlack}\tiny\insertsubtitle};
+      \node[above] at(6.4cm,2.25cm) {\color{myBlack}\tiny by};
+      \node at (6.4cm,2cm) {\color{myBlack}\LARGE\insertauthor};
+
+      % add the date in the corner
+      \node[anchor=south east] at(12.8cm,0cm) {\color{myGray}\tiny\insertdate};
+            
+      
+    %
+    % standard page
+    %
+    \else
+      % title bar
+      \fill[color=myBlue] (0, 8.5cm) rectangle(12.8cm,9.6cm);
+
+      % frame title
+      \node[anchor=north,text width=11.8cm,inner xsep=0.5cm,inner ysep=0.25cm]
+        at (6.4cm,9.6cm) {\color{myWhite}\huge\textbf{\insertframetitle}};
+
+      % progress bar (if enabled)
+      \ifnum \value{showProgressBar}>0\relax%
+      
+        % the the progress bar icon in the middle of the screen
+        \draw[fill=myGray,draw=none]
+          (0cm,0cm) rectangle (12.8cm,0.25cm);
+        \draw[fill=myBlue,draw=none]
+          (0cm,0cm) rectangle (\progressbar@tmpdim,0.25cm);
+
+        % bottom information
+        \node[anchor=south west] at (0cm,0.25cm)
+          {\color{myGray}\tiny\insertsection};
+          
+        % slide numbers (if enabled)
+        \ifnum \value{showSlideNumbers}>0\relax%
+          \node[anchor=south east] at (12.8cm,0.25cm)
+            {\color{myGray}\tiny\insertframenumber/\inserttotalframenumber};
+        \fi
+        
+      % no progress bar
+      \else
+      
+        % bottom information
+        \node[anchor=south west] at (0cm,0cm)
+          {\color{myGray}\tiny\insertsection};
+        
+        % slide numbers (if enabled)
+        \ifnum \value{showSlideNumbers}>0\relax%
+          \node[anchor=south east] at (12.8cm,0cm)
+            {\color{myGray}\tiny\insertframenumber/\inserttotalframenumber};
+        \fi
+        
+      \fi
+      
+    \fi
+  \end{tikzpicture}
+}
+
+\makeatother
+
