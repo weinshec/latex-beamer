@@ -31,8 +31,8 @@ ${TEMP}/%.pdf: ${IMG}/%.eps
 ##################################################
 
 all: ${NAME}.tex ${EPS2PDF}
-	pdflatex -output-directory ${TEMP} $<
-	pdflatex -output-directory ${TEMP} $<
+	pdflatex -file-line-error -output-directory ${TEMP} $<
+	pdflatex -file-line-error -output-directory ${TEMP} $<
 	cp ${TEMP}/${NAME}.pdf ${PWD}
 
 clean:

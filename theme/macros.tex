@@ -1,45 +1,14 @@
-% adds reference to bottom right of corner of a slide
-\usepackage[absolute,overlay]{textpos} % text references in slide corners
-\newcommand\textref[1]{%
-  \begin{textblock*}{\paperwidth}(0pt,0.99\textheight)
-  \raggedleft \tiny{\emph{#1}}\hspace{.5em}
-  \end{textblock*}}
-
-
-
-% Draw the custom titlepage
-\newcommand\myTitlePage[1]{%
-\setbeamertemplate{background}
-{\includegraphics[width=\paperwidth,height=\paperheight]{frontpage_bg.pdf}}
-\setbeamertemplate{footline}[default]
-
-\begin{frame}
-\vspace{1cm}
-\begin{columns}
-\column{2.75in}
-  \titlepage
-  % \vspace{10cm}
-\column{2.0in}
-  \centering
-  \includegraphics[width=0.9\textwidth]{#1}
-\end{columns}
-\end{frame}
-
-\setbeamertemplate{background}
- {\includegraphics[width=\paperwidth,height=\paperheight]{slide_bg}}
-\setbeamertemplate{footline}[bunsentheme]}
-
-
-
-
 % Declare wideitemize environment
 \newenvironment{wideitemize}{\itemize\addtolength{\itemsep}{10pt}}{\enditemize}
 
+
 % Backup section begin and end
 \newcommand{\backupbegin}{
-   \setbeamertemplate{background}{}
    \newcounter{lastframenumber}
    \setcounter{lastframenumber}{\value{framenumber}}
+   \section{Backup}
+   \setcounter{showProgressBar}{0}
+   \setcounter{showSlideNumbers}{0}
 }
 \newcommand{\backupend}{
    \addtocounter{lastframenumber}{-\value{framenumber}}
