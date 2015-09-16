@@ -19,7 +19,6 @@
 \ProcessOptionsBeamer
 
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                             COLOR DEFINITIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -27,7 +26,6 @@
 \definecolor{myRed}{RGB}{230,37,52}
 \definecolor{myOrange}{RGB}{255,156,0}
 \definecolor{myBlack}{RGB}{43,40,40}
-\definecolor{myBlue2}{RGB}{22,190,207}
 \definecolor{myWhite}{RGB}{255,255,243}
 \definecolor{myGray}{RGB}{107,110,108}
 
@@ -40,6 +38,7 @@
 
 \setbeamercolor{enumerate item}   {fg=myBlue}
 \setbeamercolor{enumerate subitem}{fg=myOrange}
+\setbeamercolor{description item} {fg=myBlue}
 \setbeamercolor{alerted text}     {fg=myBlue}
 \setbeamercolor{section in toc}   {fg=myBlack}
 \setbeamercolor{block title}      {fg=myBlue}
@@ -67,6 +66,7 @@
 
 \setbeamertemplate{caption}{\tiny\insertcaption}
 \setbeamertemplate{caption label separator}{}
+\setlength\abovecaptionskip{-5pt}
 
 \setbeamertemplate{navigation symbols}{}
 
@@ -98,6 +98,8 @@
 \setbeamertemplate{title page}{}
 \setbeamertemplate{frametitle}{}
 
+\setbeamersize{text margin left  = 0.4cm}
+\setbeamersize{text margin right = 0.4cm}
 
 \setbeamertemplate{background}{
   
@@ -124,7 +126,7 @@
       % title
       \fill[color=myBlue] (0, 6.2cm) rectangle(12.8cm, 9.6cm);
       \node[anchor=south,text width=11.8cm,inner xsep=0.5cm] at (6.4cm,6.2cm)
-        {\color{myWhite}\Huge\textbf{\inserttitle}};
+        {\color{myWhite}\Huge\inserttitle};
         
       % subtitle
       \node[anchor=north east,text width=11.8cm,align=right] at (12.3cm,6.2cm)
@@ -137,7 +139,7 @@
       
       % date
       \node[anchor=south east] at(12.8cm,0cm) {\color{myGray}\tiny\insertdate};
-            
+
       
     %
     % standard page
@@ -148,7 +150,7 @@
 
       % frame title
       \node[anchor=north,text width=11.8cm,inner xsep=0.5cm,inner ysep=0.25cm]
-        at (6.4cm,9.6cm) {\color{myWhite}\huge\textbf{\insertframetitle}};
+        at (6.4cm,9.6cm) {\color{myWhite}\huge\insertframetitle};
 
       % progress bar (if enabled)
       \ifnum \value{showProgressBar}>0\relax%
