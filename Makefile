@@ -36,8 +36,8 @@ view: ${NAME}.pdf
 	zathura ${NAME}.pdf &
 
 ${NAME}.pdf: ${NAME}.tex ${EPS2PDF}
-	pdflatex -file-line-error -output-directory ${TEMP} $<
-	pdflatex -file-line-error -output-directory ${TEMP} $<
+	xelatex -file-line-error -output-directory ${TEMP} $<
+	xelatex -file-line-error -output-directory ${TEMP} $<
 	cp ${TEMP}/${NAME}.pdf ${PWD}
 
 clean:
