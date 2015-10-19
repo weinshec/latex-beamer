@@ -22,12 +22,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                             COLOR DEFINITIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\definecolor{myBlue}{RGB}{72,131,232}
+%\definecolor{myBlue}{RGB}{72,131,232}
+%\definecolor{myBlue}{RGB}{67,117,200}
+\definecolor{myBlue}{RGB}{81,132,217}
 \definecolor{myRed}{RGB}{230,37,52}
 \definecolor{myOrange}{RGB}{255,156,0}
 \definecolor{myBlack}{RGB}{65,65,65}
 \definecolor{myWhite}{RGB}{255,255,243}
-\definecolor{myGray}{RGB}{107,110,108}
+%\definecolor{myGray}{RGB}{107,110,108}
+\definecolor{myGray}{RGB}{127,120,128}
+\definecolor{myLightGray}{RGB}{165,165,165}
 
 
 
@@ -151,24 +155,24 @@
 
       % frame title
       \node[anchor=north,text width=11.8cm,inner xsep=0.5cm,inner ysep=0.25cm]
-        at (6.4cm,9.6cm) {\color{myWhite}\huge\insertframetitle};
+        at (6.4cm,9.6cm) {\huge\color{myWhite}\insertframetitle};
 
       % progress bar (if enabled)
       \ifnum \value{showProgressBar}>0\relax%
       
-        % the the progress bar icon in the middle of the screen
-        \draw[fill=myGray,draw=none]
-          (0cm,0cm) rectangle (12.8cm,0.25cm);
+        % the progress bar icon in the middle of the screen
+        \draw[fill=myLightGray,draw=none]
+          (0cm,0cm) rectangle (12.8cm,0.10cm);
         \draw[fill=myBlue,draw=none]
-          (0cm,0cm) rectangle (\progressbar@tmpdim,0.25cm);
+          (0cm,0cm) rectangle (\progressbar@tmpdim,0.10cm);
 
         % bottom information
-        \node[anchor=south west] at (0cm,0.25cm)
+        \node[anchor=south west] at (0cm,0.10cm)
           {\color{myGray}\tiny\insertshorttitle \: :: \insertsection};
           
         % slide numbers (if enabled)
         \ifnum \value{showSlideNumbers}>0\relax%
-          \node[anchor=south east] at (12.8cm,0.25cm)
+          \node[anchor=south east] at (12.8cm,0.10cm)
             {\color{myGray}\tiny\insertframenumber/\inserttotalframenumber};
         \fi
         
