@@ -38,8 +38,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                   INNER THEME
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\setbeamersize{text margin left=1em,text margin right=1em}
-
 \setbeamercolor{normal text}      {fg=myBlack}
 \setbeamercolor{enumerate item}   {fg=myBlue}
 \setbeamercolor{enumerate subitem}{fg=myOrange}
@@ -68,6 +66,8 @@
 \setbeamerfont{itemize/enumerate body}{size=\large}
 \setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
 \setbeamerfont{itemize/enumerate subsubbody}{size=\small}
+
+\addtobeamertemplate{block begin}{\setlength\abovedisplayskip{0pt}}
 
 \setbeamertemplate{caption}{\tiny\insertcaption}
 \setbeamertemplate{caption label separator}{}
@@ -101,7 +101,7 @@
 %                                                                   OUTER THEME
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setbeamertemplate{title page}{}
-\setbeamertemplate{frametitle}{}
+\setbeamertemplate{frametitle}{\vspace{0.4cm}}
 
 \setbeamersize{text margin left  = 0.4cm}
 \setbeamersize{text margin right = 0.4cm}
