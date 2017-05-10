@@ -3,33 +3,25 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \mode<presentation>
 
-\usepackage{color}
+\usepackage{xcolor}
 \usepackage{tikz}
 \usetikzlibrary{calc}
+\usepackage[none]{hyphenat}
 
 \include{macros}
 
 \setbeamercovered{transparent = invisible}
 
-\usepackage[none]{hyphenat}
-
-\newif\ifbeamer@secheader
-\beamer@secheaderfalse
-\DeclareOptionBeamer{secheader}{\beamer@secheadertrue}
-\ProcessOptionsBeamer
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                             COLOR DEFINITIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\definecolor{myBlue}{RGB}{72,131,232}
-%\definecolor{myBlue}{RGB}{67,117,200}
 \definecolor{myBlue}{RGB}{81,132,217}
 \definecolor{myRed}{RGB}{230,37,52}
 \definecolor{myOrange}{RGB}{255,156,0}
 \definecolor{myBlack}{RGB}{65,65,65}
-\definecolor{myWhite}{RGB}{255,255,243}
-%\definecolor{myGray}{RGB}{107,110,108}
+\definecolor{myWhite}{RGB}{255,255,255}
 \definecolor{myGray}{RGB}{127,120,128}
 \definecolor{myLightGray}{RGB}{165,165,165}
 
@@ -47,20 +39,20 @@
 \setbeamercolor{block title}      {fg=myBlue}
 \setbeamercolor{caption}          {fg=myGray}
 
-\setbeamertemplate{itemize item}{
-    \tikz{
-        \draw[fill=myBlue,draw=none] (0, 0) rectangle(0.1, 0.1);
-        \draw[fill=myBlue,draw=none] (0.1, 0.1) rectangle(0.2, 0.2);
-        \draw[fill=myBlue,draw=none] (0, 0.2) rectangle(0.1, 0.3);
-    }
+\setbeamertemplate{itemize item}{%
+  \tikz{%
+    \draw[fill=myBlue,draw=none] (0, 0) rectangle (0.1, 0.1);
+    \draw[fill=myBlue,draw=none] (0.1, 0.1) rectangle (0.2, 0.2);
+    \draw[fill=myBlue,draw=none] (0, 0.2) rectangle (0.1, 0.3);
+  }
 }
 
-\setbeamertemplate{itemize subitem}{
-    \tikz{
-        \draw[fill=myOrange,draw=none] (0, 0) rectangle(0.075, 0.075);
-        \draw[fill=myOrange,draw=none] (0.075, 0.075) rectangle(0.15, 0.15);
-        \draw[fill=myOrange,draw=none] (0, 0.15) rectangle(0.075, 0.225);
-    }
+\setbeamertemplate{itemize subitem}{%
+  \tikz{%
+    \draw[fill=myOrange,draw=none] (0, 0) rectangle (0.075, 0.075);
+    \draw[fill=myOrange,draw=none] (0.075, 0.075) rectangle (0.15, 0.15);
+    \draw[fill=myOrange,draw=none] (0, 0.15) rectangle (0.075, 0.225);
+  }
 }
 
 \setbeamerfont{itemize/enumerate body}{size=\large}
@@ -106,8 +98,8 @@
 \setbeamersize{text margin left  = 0.4cm}
 \setbeamersize{text margin right = 0.4cm}
 
-\setbeamertemplate{background}{
-  
+\setbeamertemplate{background}{%
+
   % caluclations for the progressbar
   \progressbar@tmpcounta=\insertframenumber
   \progressbar@tmpcountb=\inserttotalframenumber
@@ -122,44 +114,44 @@
     % background color
     %
     \fill[color=myWhite] (0,0) rectangle(12.8cm,9.6cm);
-    
+
     %
     % the title page
     %
     \ifnum\thepage=1\relax
-    
+
       % title
       \fill[color=myBlue] (0, 6.2cm) rectangle(12.8cm, 9.6cm);
       \node[anchor=south,text width=11.8cm,inner xsep=0.5cm] at (6.4cm,6.2cm)
         {\color{myWhite}\Huge\inserttitle};
-        
+
       % subtitle
       \node[anchor=north east,text width=11.8cm,align=right] at (12.3cm,6.2cm)
         {\color{myBlack}\insertsubtitle};
-        
+
       % author
       %\node[above] at(6.4cm,2.25cm) {\color{myBlack}\tiny by};
       \node at (6.4cm,1.6cm) {\color{myBlack}\LARGE\insertauthor};
       \node at (6.4cm,1.1cm) {\color{myBlack}\small\insertinstitute};
-      
+
       % date
       \node[anchor=south east] at(12.8cm,0cm) {\color{myGray}\tiny\insertdate};
 
-      
+
     %
     % standard page
     %
     \else
       % title bar
-      \fill[color=myBlue] (0, 8.5cm) rectangle(12.8cm,9.6cm);
+      \fill[color=myBlue] (0, 8.4cm) rectangle(12.8cm,9.6cm);
 
       % frame title
-      \node[anchor=north,text width=11.8cm,inner xsep=0.5cm,inner ysep=0.25cm]
-        at (6.4cm,9.6cm) {\huge\color{myWhite}\insertframetitle};
+      \node[anchor=north west,text width=11.8cm,inner xsep=0.4cm, inner ysep=0.4cm]
+        at (0,9.6cm) {\LARGE\color{myWhite}\insertframetitle};
 
       % progress bar (if enabled)
       \ifnum \value{showProgressBar}>0\relax%
-      
+
         % the progress bar icon in the middle of the screen
         \draw[fill=myLightGray,draw=none]
           (0cm,0cm) rectangle (12.8cm,0.10cm);
@@ -169,28 +161,26 @@
         % bottom information
         \node[anchor=south west] at (0cm,0.10cm)
           {\color{myGray}\tiny\insertshorttitle \: :: \insertsection};
-          
+
         % slide numbers (if enabled)
         \ifnum \value{showSlideNumbers}>0\relax%
           \node[anchor=south east] at (12.8cm,0.10cm)
             {\color{myGray}\tiny\insertframenumber/\inserttotalframenumber};
         \fi
-        
+
       % no progress bar
       \else
-      
+
         % bottom information
         \node[anchor=south west] at (0cm,0cm)
           {\color{myGray}\tiny\insertshorttitle \: :: \insertsection};
-        
+
         % slide numbers (if enabled)
         \ifnum \value{showSlideNumbers}>0\relax%
           \node[anchor=south east] at (12.8cm,0cm)
             {\color{myGray}\tiny\insertframenumber/\inserttotalframenumber};
         \fi
-        
       \fi
-      
     \fi
   \end{tikzpicture}
 }
