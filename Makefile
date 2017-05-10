@@ -1,46 +1,42 @@
-##################################################
-##                           general path settings
-##################################################
+# _____________________________________________________________________________
+#                                                              PROJECT SETTINGS
+PROJECT = main
 
-NAME      = main
+PWD        = ${shell pwd}
+EXTRA      = ${PWD}/extra
+IMG        = ${PWD}/img
+BUILD      = ${PWD}/build
 
-PWD       = ${shell pwd}
-IMG       = ${PWD}/img
-THEME     = ${PWD}/theme
+TEX_FILES   = ${PWD}/${PROJECT}.tex
+EXTRA_FILES = $(shell find ${EXTRA} -type f -name '*')
+IMG_FILES   = $(shell find ${IMG} -type f -name '*')
 
-TEMP      = ${PWD}/temp
+LATEX_CMD   = xelatex
+LATEX_FLAGS = -shell-escape -halt-on-error -file-line-error -output-directory ${BUILD}
+PDF_VIEWER  = zathura
 
-export TEXINPUTS := ${TEXINPUTS}:${THEME}:${TEMP}:${IMG}
-
-
-
-##################################################
-##                                     image rules
-##################################################
-
-EPS := $(wildcard ${IMG}/*.eps)
-EPS2PDF := $(patsubst ${IMG}/%.eps,${TEMP}/%.pdf,$(EPS))
-
-${TEMP}/%.pdf: ${IMG}/%.eps
-	inkscape --without-gui --file=$< --export-pdf=${TEMP}/$*.pdf 
+export TEXINPUTS   := ${EXTRA}:${TEXINPUTS}
 
 
+# _____________________________________________________________________________
+#                                                            BUILD INSTRUCTIONS
+all: ${PROJECT}.pdf
 
-##################################################
-##                              build instructions
-##################################################
+${PROJECT}.pdf: ${BUILD}/${PROJECT}.pdf
+	cp $< $@
 
-all: ${NAME}.pdf
+${BUILD}/${PROJECT}.pdf: ${BUILD}/${PROJECT}.aux
+	$(LATEX_CMD) ${LATEX_FLAGS} ${PROJECT}
 
-view: ${NAME}.pdf
-	zathura ${NAME}.pdf &
+${BUILD}/${PROJECT}.aux: ${TEX_FILES} ${EXTRA_FILES} ${IMG_FILES} | ${BUILD}
+	$(LATEX_CMD) ${LATEX_FLAGS} ${PROJECT}
 
-${NAME}.pdf: ${NAME}.tex ${EPS2PDF}
-	xelatex -file-line-error -output-directory ${TEMP} $<
-	xelatex -file-line-error -output-directory ${TEMP} $<
-	cp ${TEMP}/${NAME}.pdf ${PWD}
+${BUILD}:
+	mkdir -p ${BUILD}
+
+show: ${PROJECT}.pdf
+	($(PDF_VIEWER) ${PROJECT}.pdf &)
 
 clean:
-	rm -rf ${TEMP}/*
-	if [ -a ${NAME}.pdf ] ; then rm ${NAME}.pdf ; fi;
-
+	rm -rf ${BUILD}
+	if [ -f ${PROJECT}.pdf ] ; then rm ${PROJECT}.pdf ; fi;

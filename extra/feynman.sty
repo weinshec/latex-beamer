@@ -1,0 +1,70 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{feynman}[2017/02/22 Feynman digrams using tikz]
+
+\RequirePackage{amsmath}
+\RequirePackage{tikz}
+
+\usetikzlibrary{arrows}
+\usetikzlibrary{positioning}               % For "above of=" commands
+\usetikzlibrary{calc,through}              % For coordinates
+\usetikzlibrary{decorations.pathreplacing} % For curly braces
+\usetikzlibrary{decorations.pathmorphing}  % For Feynman Diagrams
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{shapes.misc}
+
+
+\tikzset{%
+  >=latex',
+  line/.style={draw},
+  arrow/.style={postaction={decorate}, decoration={%
+    markings, mark=at position 0.60 with {\arrow[draw]{#1}}}
+  },
+  arrow/.default={>},
+  cross/.style={cross out, draw, minimum size={#1},
+    inner sep=0pt, outer sep=0pt,
+  },
+  cross/.default={1.5mm}
+}
+
+\tikzset{%
+  vertex/.style={%
+    circle, fill, minimum size=1.5pt, inner sep=0, outer sep=0
+  },
+  blob/.style={%
+    circle, draw, inner sep=0mm, minimum size=15pt
+  },
+}
+
+\tikzset{%
+  vector/.style={%
+    draw, decorate, decoration={%
+      snake, amplitude=1mm, segment length=2mm
+    }
+  },
+  fermion/.style={%
+    line, arrow=>
+  },
+  antifermion/.style={%
+    line, arrow=<
+  },
+  gluon/.style={%
+    draw, decorate, decoration={%
+      coil, amplitude=1mm, segment length=1mm}
+  },
+  scalar/.style={%
+    draw, dashed
+  },
+}
+
+\tikzset{%
+  fermionloop/.style={%
+    circle, draw, minimum size=#1, postaction={decorate}, decoration={%
+      markings, mark=between positions 0.25 and 0.75 step 0.5 with {%
+      \draw[->,thin] (0,0) -- (0.6mm,0);}}
+  },
+  fermionloop/.default=0.6cm,
+  gluonloop/.style={%
+    circle, draw, gluon, minimum size=#1
+  },
+  gluonloop/.default=0.6cm,
+}

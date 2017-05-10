@@ -1,16 +1,21 @@
 \documentclass{beamer}
+
 \usepackage{graphicx}
-\usepackage{epstopdf}
 \usepackage{hyperref}
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[bitstream-charter]{mathdesign}
+
 \usepackage{booktabs}
 \usepackage{amssymb}
 \usepackage{xcolor}
 \usepackage{siunitx}
 \sisetup{exponent-product = \cdot}
 
-\input{theme/feynman}
+\usepackage{feynman}
 
 \mode<presentation>
 {%
@@ -20,8 +25,9 @@
 }
 
 
+% _____________________________________________________________________________
+% meta data                                                           META DATA
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title[Short Title]{This is a long title}
 \subtitle{Well, this is a subtitle}
 \author{Christoph Weinsheimer}
@@ -33,14 +39,15 @@
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{document}
+% _____________________________________________________________________________
+% title page                                                         TITLE PAGE
 
+\begin{document}
 \maketitle
 
+% _____________________________________________________________________________
+% slides                                                                 SLIDES
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Example}
 
 \begin{frame}{Example Frame}
