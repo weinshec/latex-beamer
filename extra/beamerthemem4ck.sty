@@ -84,8 +84,8 @@
 \newcount\progressbar@tmpcountb % auxiliary counter
 \newdimen\progressbar@pbwidth   % progressbar width
 \newdimen\progressbar@tmpdim    % auxiliary dimension
-
-\progressbar@pbwidth=12.8cm
+\progressbar@pbwidth=\paperwidth
+\makeatother
 
 
 
@@ -98,6 +98,19 @@
 \setbeamersize{text margin left  = 0.4cm}
 \setbeamersize{text margin right = 0.4cm}
 
+\newlength{\titleSepY}
+\setlength{\titleSepY}{0.65\paperheight}
+\newlength{\shadowHeight}
+\setlength{\shadowHeight}{0.1cm}
+\newlength{\headSepY}
+\setlength{\headSepY}{0.875\paperheight}
+\newlength{\headY}
+\setlength{\headY}{0.96\paperheight}
+\newlength{\footHeight}
+\setlength{\footHeight}{0.1cm}
+
+
+\makeatletter
 \setbeamertemplate{background}{%
 
   % caluclations for the progressbar
@@ -107,64 +120,77 @@
   \multiply\progressbar@tmpdim by \progressbar@tmpcounta
   \divide\progressbar@tmpdim by \progressbar@tmpcountb
 
-  \begin{tikzpicture}
-    \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+  \begin{tikzpicture}[
+      titlebarshadow/.style={top color=myGray!70, bottom color=myWhite}]
 
-    %
+    \useasboundingbox (0,0) rectangle (\paperwidth,\paperheight);
+
     % background color
-    %
-    \fill[color=myWhite] (0,0) rectangle(12.8cm,9.6cm);
+    \fill[color=myWhite] (0,0) rectangle (\paperwidth, \paperheight);
 
-    %
-    % the title page
-    %
+    % title page
     \ifnum\thepage=1\relax
 
       % title
-      \fill[color=myBlue] (0, 6.2cm) rectangle(12.8cm, 9.6cm);
-      \node[anchor=south,text width=11.8cm,inner xsep=0.5cm] at (6.4cm,6.2cm)
+      \fill[color=myBlue]
+        (0, \titleSepY) rectangle (\paperwidth, \paperheight);
+      \shade[titlebarshadow]
+        (0, \titleSepY) rectangle ++(\paperwidth, -\shadowHeight);
+      \draw[color=myBlue, line width=0.1mm]
+        (0, \titleSepY) -- (\paperwidth, \titleSepY);
+      \node[anchor=south, text width=0.9\paperwidth]
+        at (0.5\paperwidth, \titleSepY)
         {\color{myWhite}\Huge\inserttitle};
 
       % subtitle
-      \node[anchor=north east,text width=11.8cm,align=right] at (12.3cm,6.2cm)
+      \node[anchor=north, text width=0.9\paperwidth, align=right]
+        at (0.5\paperwidth, 0.98\titleSepY)
         {\color{myBlack}\insertsubtitle};
 
       % author
-      %\node[above] at(6.4cm,2.25cm) {\color{myBlack}\tiny by};
-      \node at (6.4cm,1.6cm) {\color{myBlack}\LARGE\insertauthor};
-      \node at (6.4cm,1.1cm) {\color{myBlack}\small\insertinstitute};
+      \node at (0.5\paperwidth, 0.15\paperwidth)
+        {\color{myBlack}\LARGE\insertauthor};
+      \node at (0.5\paperwidth, 0.11\paperwidth)
+        {\color{myBlack}\small\insertinstitute};
 
       % date
-      \node[anchor=south east] at(12.8cm,0cm) {\color{myGray}\tiny\insertdate};
+      \node[anchor=south east]
+        at (\paperwidth, 0) {\color{myGray}\tiny\insertdate};
 
 
-    %
     % standard page
-    %
     \else
       % title bar
-      \fill[color=myBlue] (0, 8.4cm) rectangle(12.8cm,9.6cm);
+      \fill[color=myBlue]
+        (0, \headSepY) rectangle (\paperwidth, \paperheight);
+      \shade[titlebarshadow]
+        (0, \headSepY) rectangle ++(\paperwidth, -\shadowHeight);
+      \draw[color=myBlue, line width=0.1mm]
+        (0, \headSepY) -- (\paperwidth, \headSepY);
 
       % frame title
-      \node[anchor=north west,text width=11.8cm,inner xsep=0.4cm, inner ysep=0.4cm]
-        at (0,9.6cm) {\LARGE\color{myWhite}\insertframetitle};
+      \node[anchor=north, text width=0.95\paperwidth]
+        at (0.5\paperwidth, \headY)
+        {\LARGE\color{myWhite}\insertframetitle};
 
       % progress bar (if enabled)
-      \ifnum \value{showProgressBar}>0\relax%
+      \ifnum \value{showProgressBar}>0\relax
 
         % the progress bar icon in the middle of the screen
-        \draw[fill=myLightGray,draw=none]
-          (0cm,0cm) rectangle (12.8cm,0.10cm);
-        \draw[fill=myBlue,draw=none]
-          (0cm,0cm) rectangle (\progressbar@tmpdim,0.10cm);
+        \draw[fill=myLightGray, draw=none]
+          (0, 0) rectangle (\paperwidth, \footHeight);
+        \draw[fill=myBlue, draw=none]
+          (0, 0) rectangle (\progressbar@tmpdim, \footHeight);
 
         % bottom information
-        \node[anchor=south west] at (0cm,0.10cm)
+        \node[anchor=south west]
+          at (0, \footHeight)
           {\color{myGray}\tiny\insertshorttitle \: :: \insertsection};
 
         % slide numbers (if enabled)
-        \ifnum \value{showSlideNumbers}>0\relax%
-          \node[anchor=south east] at (12.8cm,0.10cm)
+        \ifnum \value{showSlideNumbers}>0\relax
+          \node[anchor=south east]
+            at (\paperwidth, \footHeight)
             {\color{myGray}\tiny\insertframenumber/\inserttotalframenumber};
         \fi
 
@@ -172,12 +198,14 @@
       \else
 
         % bottom information
-        \node[anchor=south west] at (0cm,0cm)
+        \node[anchor=south west]
+          at (0, 0)
           {\color{myGray}\tiny\insertshorttitle \: :: \insertsection};
 
         % slide numbers (if enabled)
-        \ifnum \value{showSlideNumbers}>0\relax%
-          \node[anchor=south east] at (12.8cm,0cm)
+        \ifnum \value{showSlideNumbers}>0\relax
+          \node[anchor=south east]
+            at (\paperwidth, 0)
             {\color{myGray}\tiny\insertframenumber/\inserttotalframenumber};
         \fi
       \fi
@@ -186,4 +214,3 @@
 }
 
 \makeatother
-

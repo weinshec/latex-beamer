@@ -34,7 +34,7 @@ ${BUILD}/${PROJECT}.aux: ${TEX_FILES} ${EXTRA_FILES} ${IMG_FILES} | ${BUILD}
 ${BUILD}:
 	mkdir -p ${BUILD}
 
-show: ${PROJECT}.pdf
+view: ${PROJECT}.pdf
 	($(PDF_VIEWER) ${PROJECT}.pdf &)
 
 clean:
