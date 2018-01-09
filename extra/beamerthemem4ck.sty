@@ -31,6 +31,8 @@
 %                                                                   INNER THEME
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setbeamercolor{normal text}      {fg=myBlack}
+\setbeamercolor{itemize item}     {fg=myBlue}
+\setbeamercolor{itemize subitem}  {fg=myOrange}
 \setbeamercolor{enumerate item}   {fg=myBlue}
 \setbeamercolor{enumerate subitem}{fg=myOrange}
 \setbeamercolor{description item} {fg=myBlue}
@@ -46,7 +48,6 @@
     \draw[fill=myBlue,draw=none] (0, 0.2) rectangle (0.1, 0.3);
   }
 }
-
 \setbeamertemplate{itemize subitem}{%
   \tikz{%
     \draw[fill=myOrange,draw=none] (0, 0) rectangle (0.075, 0.075);
@@ -54,6 +55,8 @@
     \draw[fill=myOrange,draw=none] (0, 0.15) rectangle (0.075, 0.225);
   }
 }
+
+\setlength{\leftmarginii}{1.2em}
 
 \setbeamerfont{itemize/enumerate body}{size=\large}
 \setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
@@ -95,8 +98,8 @@
 \setbeamertemplate{title page}{}
 \setbeamertemplate{frametitle}{\vspace{0.4cm}}
 
-\setbeamersize{text margin left  = 0.4cm}
-\setbeamersize{text margin right = 0.4cm}
+\setbeamersize{text margin left  = 0.3cm}
+\setbeamersize{text margin right = 0.3cm}
 
 \newlength{\titleSepY}
 \setlength{\titleSepY}{0.65\paperheight}
@@ -110,15 +113,27 @@
 \setlength{\footHeight}{0.1cm}
 
 
+\setbeamertemplate{headline}{%
+\leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=0.1\paperheight]{}%
+      % dummy headline box, needed for top margin
+    \end{beamercolorbox}%
+  }
+}
+
+\setbeamertemplate{footline}{%
+\leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=4\footHeight]{}%
+      % dummy footline box, needed for bottom margin
+    \end{beamercolorbox}%
+  }
+}
+
+
 \makeatletter
 \setbeamertemplate{background}{%
-
-  % caluclations for the progressbar
-  \progressbar@tmpcounta=\insertframenumber
-  \progressbar@tmpcountb=\inserttotalframenumber
-  \progressbar@tmpdim=\progressbar@pbwidth
-  \multiply\progressbar@tmpdim by \progressbar@tmpcounta
-  \divide\progressbar@tmpdim by \progressbar@tmpcountb
 
   \begin{tikzpicture}[
       titlebarshadow/.style={top color=myGray!70, bottom color=myWhite}]
@@ -176,6 +191,13 @@
       % progress bar (if enabled)
       \ifnum \value{showProgressBar}>0\relax
 
+        % caluclations for the progressbar
+        \progressbar@tmpcounta=\insertframenumber
+        \progressbar@tmpcountb=\inserttotalframenumber
+        \progressbar@tmpdim=\progressbar@pbwidth
+        \multiply\progressbar@tmpdim by \progressbar@tmpcounta
+        \divide\progressbar@tmpdim by \progressbar@tmpcountb
+
         % the progress bar icon in the middle of the screen
         \draw[fill=myLightGray, draw=none]
           (0, 0) rectangle (\paperwidth, \footHeight);
@@ -214,3 +236,17 @@
 }
 
 \makeatother
+
+
+% add section titles
+\AtBeginSection[]{\frame{\sectionpage}}
+\setbeamertemplate{section page}
+{%
+  \begin{tikzpicture}
+    % set up the entire slide as the canvas
+    \useasboundingbox (0,0) rectangle(\paperwidth,\paperheight);
+    \fill[color=myWhite] (-0.3cm,0) rectangle(\paperwidth,\paperheight);
+    \fill[color=myBlue] (-1cm, 0.5\paperheight-1cm) rectangle(\paperwidth, 0.5\paperheight+1cm);
+    \node[text width=\the\paperwidth-1cm,align=center] at (0.4\paperwidth, 0.5\paperheight) {\color{myWhite}\Huge{\insertsection}};
+  \end{tikzpicture}
+}
