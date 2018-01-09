@@ -1,23 +1,25 @@
 \documentclass[aspectratio=43]{beamer}
 
-\usepackage{graphicx}
-\usepackage{hyperref}
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
 \usepackage{booktabs}
 \usepackage{amssymb}
-\usepackage{xcolor}
 \usepackage{siunitx}
 \sisetup{exponent-product = \cdot}
 
 \usepackage{feynman}
 
-\mode<presentation>
-{%
-  \usetheme{m4ck}
-  \setcounter{showProgressBar}{1}
-  \setcounter{showSlideNumbers}{1}
-}
+
+% _____________________________________________________________________________
+% beamer theme                                                     BEAMER THEME
+\usetheme{m4ck}
+
+% option switches (toggle with -true <-> -false)
+\progressbartrue%    enable progressbar at the bottom
+\slidenumberstrue%   enable slidenumbers
+\sectionpagestrue%   enable section cover pages
 
 
 % _____________________________________________________________________________
@@ -33,12 +35,12 @@
 \date{Spring 2015}
 
 
-
 % _____________________________________________________________________________
 % title page                                                         TITLE PAGE
 
 \begin{document}
 \maketitle
+
 
 % _____________________________________________________________________________
 % slides                                                                 SLIDES
@@ -76,7 +78,6 @@
 \end{frame}
 
 
-
 \begin{frame}{Another Slide}
   \begin{center}
     \[
@@ -84,7 +85,6 @@
     \]
   \end{center}
 \end{frame}
-
 
 
 \backupbegin%

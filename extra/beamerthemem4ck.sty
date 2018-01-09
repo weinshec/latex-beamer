@@ -2,57 +2,63 @@
 %                                                                       GENERAL
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \mode<presentation>
-
-\usepackage{xcolor}
-\usepackage{tikz}
-\usetikzlibrary{calc}
-\usepackage[none]{hyphenat}
-
-\include{macros}
-
 \setbeamercovered{transparent = invisible}
 
+\usepackage{xcolor}
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+% theme options
+\newif\ifprogressbar\progressbartrue%
+\newif\ifslidenumbers\slidenumberstrue%
+\newif\ifsectionpages\sectionpagestrue%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                             COLOR DEFINITIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\definecolor{myBlue}{RGB}{81,132,217}
-\definecolor{myRed}{RGB}{230,37,52}
-\definecolor{myOrange}{RGB}{255,156,0}
-\definecolor{myBlack}{RGB}{65,65,65}
-\definecolor{myWhite}{RGB}{255,255,255}
-\definecolor{myGray}{RGB}{127,120,128}
-\definecolor{myLightGray}{RGB}{165,165,165}
+\definecolor{mBlue}{RGB}{81,132,217}
+\definecolor{mOrange}{RGB}{255,156,0}
+\definecolor{mBlack}{RGB}{65,65,65}
+\definecolor{mWhite}{RGB}{255,255,255}
+\definecolor{mGray}{RGB}{127,120,128}
 
+\colorlet{mPrimary}{mBlue}
+\colorlet{mSecondary}{mOrange}
+\colorlet{mText}{mBlack}
+\colorlet{mTextGray}{mGray}
+
+\setbeamercolor{normal text}      {fg=mText}
+\setbeamercolor{itemize item}     {fg=mPrimary}
+\setbeamercolor{itemize subitem}  {fg=mSecondary}
+\setbeamercolor{enumerate item}   {fg=mPrimary}
+\setbeamercolor{enumerate subitem}{fg=mSecondary}
+\setbeamercolor{description item} {fg=mPrimary}
+\setbeamercolor{alerted text}     {fg=mPrimary}
+\setbeamercolor{section in toc}   {fg=mText}
+\setbeamercolor{block title}      {fg=mPrimary}
+\setbeamercolor{caption}          {fg=mTextGray}
+\setbeamercolor{frametitle}       {fg=mWhite, bg=mPrimary}
+\setbeamercolor{title page}       {fg=mWhite, bg=mPrimary}
+\setbeamercolor{footline}         {fg=mTextGray}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                   INNER THEME
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\setbeamercolor{normal text}      {fg=myBlack}
-\setbeamercolor{itemize item}     {fg=myBlue}
-\setbeamercolor{itemize subitem}  {fg=myOrange}
-\setbeamercolor{enumerate item}   {fg=myBlue}
-\setbeamercolor{enumerate subitem}{fg=myOrange}
-\setbeamercolor{description item} {fg=myBlue}
-\setbeamercolor{alerted text}     {fg=myBlue}
-\setbeamercolor{section in toc}   {fg=myBlack}
-\setbeamercolor{block title}      {fg=myBlue}
-\setbeamercolor{caption}          {fg=myGray}
-
 \setbeamertemplate{itemize item}{%
   \tikz{%
-    \draw[fill=myBlue,draw=none] (0, 0) rectangle (0.1, 0.1);
-    \draw[fill=myBlue,draw=none] (0.1, 0.1) rectangle (0.2, 0.2);
-    \draw[fill=myBlue,draw=none] (0, 0.2) rectangle (0.1, 0.3);
+    \draw[fill=mPrimary,draw=none] (0, 0) rectangle (0.1, 0.1);
+    \draw[fill=mPrimary,draw=none] (0.1, 0.1) rectangle (0.2, 0.2);
+    \draw[fill=mPrimary,draw=none] (0, 0.2) rectangle (0.1, 0.3);
   }
 }
 \setbeamertemplate{itemize subitem}{%
   \tikz{%
-    \draw[fill=myOrange,draw=none] (0, 0) rectangle (0.075, 0.075);
-    \draw[fill=myOrange,draw=none] (0.075, 0.075) rectangle (0.15, 0.15);
-    \draw[fill=myOrange,draw=none] (0, 0.15) rectangle (0.075, 0.225);
+    \draw[fill=mSecondary,draw=none] (0, 0) rectangle (0.075, 0.075);
+    \draw[fill=mSecondary,draw=none] (0.075, 0.075) rectangle (0.15, 0.15);
+    \draw[fill=mSecondary,draw=none] (0, 0.15) rectangle (0.075, 0.225);
   }
 }
 
@@ -73,15 +79,11 @@
 \usefonttheme[onlymath]{serif}
 
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                       COUNTER
+%                                                                   OUTER THEME
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcounter{showProgressBar}
-\setcounter{showProgressBar}{1}
-\newcounter{showSlideNumbers}
-\setcounter{showSlideNumbers}{1}
 
+% progress bar calculations
 \makeatletter
 \newcount\progressbar@tmpcounta % auxiliary counter
 \newcount\progressbar@tmpcountb % auxiliary counter
@@ -90,163 +92,164 @@
 \progressbar@pbwidth=\paperwidth
 \makeatother
 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                   OUTER THEME
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\setbeamertemplate{title page}{}
-\setbeamertemplate{frametitle}{\vspace{0.4cm}}
-
+% define new lengths
 \setbeamersize{text margin left  = 0.3cm}
 \setbeamersize{text margin right = 0.3cm}
+\newlength{\frametitleheight}
+\setlength{\frametitleheight}{0.14\paperheight}
+\newlength{\footlineheight}
+\setlength{\footlineheight}{0.04\paperheight}
+\newlength{\progressbarheight}
+\setlength{\progressbarheight}{1mm}
+\newlength{\titlepageboxheight}
+\setlength{\titlepageboxheight}{0.65\paperheight}
+\newlength{\sectionboxheight}
+\setlength{\sectionboxheight}{0.3\paperheight}
 
-\newlength{\titleSepY}
-\setlength{\titleSepY}{0.65\paperheight}
-\newlength{\shadowHeight}
-\setlength{\shadowHeight}{0.1cm}
-\newlength{\headSepY}
-\setlength{\headSepY}{0.875\paperheight}
-\newlength{\headY}
-\setlength{\headY}{0.96\paperheight}
-\newlength{\footHeight}
-\setlength{\footHeight}{0.1cm}
-
-
-\setbeamertemplate{headline}{%
-\leavevmode%
-  \hbox{%
-    \begin{beamercolorbox}[wd=\paperwidth,ht=0.1\paperheight]{}%
-      % dummy headline box, needed for top margin
-    \end{beamercolorbox}%
-  }
+% frame title theme
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip%
+  \begin{beamercolorbox}[wd=\paperwidth, ht=\frametitleheight]{}
+    \begin{tikzpicture}
+      \fill[frametitle.bg]
+        (0, 0.5mm) rectangle (\paperwidth, \frametitleheight);
+      \node[anchor=west, font=\LARGE, frametitle.fg] at
+        (0, 0.5\frametitleheight) {\strut\insertframetitle\strut};
+      \shade[top color=mGray!75, bottom color=transparent!0]
+        (0, 0) rectangle (\paperwidth, 1mm);
+    \end{tikzpicture}
+  \end{beamercolorbox}
 }
 
-\setbeamertemplate{footline}{%
-\leavevmode%
-  \hbox{%
-    \begin{beamercolorbox}[wd=\paperwidth,ht=4\footHeight]{}%
-      % dummy footline box, needed for bottom margin
-    \end{beamercolorbox}%
-  }
-}
-
-
+% footline theme
 \makeatletter
-\setbeamertemplate{background}{%
-
-  \begin{tikzpicture}[
-      titlebarshadow/.style={top color=myGray!70, bottom color=myWhite}]
-
-    \useasboundingbox (0,0) rectangle (\paperwidth,\paperheight);
-
-    % background color
-    \fill[color=myWhite] (0,0) rectangle (\paperwidth, \paperheight);
-
-    % title page
-    \ifnum\thepage=1\relax
-
-      % title
-      \fill[color=myBlue]
-        (0, \titleSepY) rectangle (\paperwidth, \paperheight);
-      \shade[titlebarshadow]
-        (0, \titleSepY) rectangle ++(\paperwidth, -\shadowHeight);
-      \draw[color=myBlue, line width=0.1mm]
-        (0, \titleSepY) -- (\paperwidth, \titleSepY);
-      \node[anchor=south, text width=0.9\paperwidth]
-        at (0.5\paperwidth, \titleSepY)
-        {\color{myWhite}\Huge\inserttitle};
-
-      % subtitle
-      \node[anchor=north, text width=0.9\paperwidth, align=right]
-        at (0.5\paperwidth, 0.98\titleSepY)
-        {\color{myBlack}\insertsubtitle};
-
-      % author
-      \node at (0.5\paperwidth, 0.15\paperwidth)
-        {\color{myBlack}\LARGE\insertauthor};
-      \node at (0.5\paperwidth, 0.11\paperwidth)
-        {\color{myBlack}\small\insertinstitute};
-
-      % date
-      \node[anchor=south east]
-        at (\paperwidth, 0) {\color{myGray}\tiny\insertdate};
-
-
-    % standard page
-    \else
-      % title bar
-      \fill[color=myBlue]
-        (0, \headSepY) rectangle (\paperwidth, \paperheight);
-      \shade[titlebarshadow]
-        (0, \headSepY) rectangle ++(\paperwidth, -\shadowHeight);
-      \draw[color=myBlue, line width=0.1mm]
-        (0, \headSepY) -- (\paperwidth, \headSepY);
-
-      % frame title
-      \node[anchor=north, text width=0.95\paperwidth]
-        at (0.5\paperwidth, \headY)
-        {\LARGE\color{myWhite}\insertframetitle};
-
-      % progress bar (if enabled)
-      \ifnum \value{showProgressBar}>0\relax
-
-        % caluclations for the progressbar
-        \progressbar@tmpcounta=\insertframenumber
-        \progressbar@tmpcountb=\inserttotalframenumber
-        \progressbar@tmpdim=\progressbar@pbwidth
-        \multiply\progressbar@tmpdim by \progressbar@tmpcounta
-        \divide\progressbar@tmpdim by \progressbar@tmpcountb
-
-        % the progress bar icon in the middle of the screen
-        \draw[fill=myLightGray, draw=none]
-          (0, 0) rectangle (\paperwidth, \footHeight);
-        \draw[fill=myBlue, draw=none]
-          (0, 0) rectangle (\progressbar@tmpdim, \footHeight);
-
-        % bottom information
-        \node[anchor=south west]
-          at (0, \footHeight)
-          {\color{myGray}\tiny\insertshorttitle \: :: \insertsection};
-
-        % slide numbers (if enabled)
-        \ifnum \value{showSlideNumbers}>0\relax
-          \node[anchor=south east]
-            at (\paperwidth, \footHeight)
-            {\color{myGray}\tiny\insertframenumber/\inserttotalframenumber};
-        \fi
-
-      % no progress bar
-      \else
-
-        % bottom information
-        \node[anchor=south west]
-          at (0, 0)
-          {\color{myGray}\tiny\insertshorttitle \: :: \insertsection};
-
-        % slide numbers (if enabled)
-        \ifnum \value{showSlideNumbers}>0\relax
-          \node[anchor=south east]
-            at (\paperwidth, 0)
-            {\color{myGray}\tiny\insertframenumber/\inserttotalframenumber};
-        \fi
+\setbeamertemplate{footline}{%
+  \nointerlineskip%
+  \ifprogressbar%
+      \addtolength{\footlineheight}{\progressbarheight}
+      \progressbar@tmpcounta=\insertframenumber
+      \progressbar@tmpcountb=\inserttotalframenumber
+      \progressbar@tmpdim=\progressbar@pbwidth
+      \multiply\progressbar@tmpdim by \progressbar@tmpcounta
+      \divide\progressbar@tmpdim by \progressbar@tmpcountb
+  \fi
+  \begin{beamercolorbox}[wd=\paperwidth, ht=\footlineheight]{}
+    \begin{tikzpicture}
+      \ifprogressbar
+        \draw[fill=mGray!60, draw=none]
+          (0, 0) rectangle (\paperwidth, \progressbarheight);
+        \draw[fill=mPrimary, draw=none]
+          (0, 0) rectangle (\progressbar@tmpdim, \progressbarheight);
       \fi
-    \fi
-  \end{tikzpicture}
-}
 
+      \node[anchor=north west, font=\tiny, footline.fg]
+        at (0, \footlineheight) {%
+          \strut\insertshorttitle \: :: \insertsection\strut%
+        };
+
+      \ifslidenumbers
+        \node[anchor=north east, font=\tiny, footline.fg]
+          at (\paperwidth, \footlineheight) {%
+          \strut\insertframenumber/\inserttotalframenumber\strut};
+      \fi
+    \end{tikzpicture}
+  \end{beamercolorbox}
+}
 \makeatother
 
+% title page theme
+\setbeamertemplate{title page}{%
+  \nointerlineskip%
+  \begin{beamercolorbox}[wd=\paperwidth, ht=\paperheight]{}
+    \begin{tikzpicture}
+      \useasboundingbox (0,0) rectangle (\paperwidth,\paperheight);
+      \fill[color=title page.bg]
+        (0, \titlepageboxheight) rectangle (\paperwidth, \paperheight);
+      \shade[top color=mGray!75, bottom color=transparent!0]
+        (0, \titlepageboxheight) rectangle ++(\paperwidth, -1mm);
+      \node[anchor=south, text width=0.9\paperwidth, title page.fg, font=\Huge]
+        at (0.5\paperwidth, \titlepageboxheight)
+        {\strut\inserttitle\strut};
+      \node[anchor=north, text width=0.9\paperwidth, align=right, mText]
+        at (0.5\paperwidth, 0.98\titlepageboxheight)
+        {\strut\insertsubtitle\strut};
+      \node[mText, font=\LARGE]
+        at (0.5\paperwidth, 0.15\paperwidth)
+        {\strut\insertauthor\strut};
+      \node[mText, font=\small]
+        at (0.5\paperwidth, 0.11\paperwidth)
+        {\strut\insertinstitute\strut};
+      \node[anchor=south east, mTextGray, font=\tiny]
+        at (\paperwidth, 0)
+        {\strut\insertdate\strut};
+    \end{tikzpicture}
+  \end{beamercolorbox}
+}
 
-% add section titles
-\AtBeginSection[]{\frame{\sectionpage}}
-\setbeamertemplate{section page}
-{%
+% section cover page theme
+\setbeamertemplate{section page}{%
+  \nointerlineskip%
+  \begin{beamercolorbox}[wd=\paperwidth, ht=\paperheight]{}
+    \begin{tikzpicture}
+      \useasboundingbox (0,0) rectangle (\paperwidth,\paperheight);
+      \node[%
+        fill=mPrimary,
+        minimum width=\paperwidth,
+        minimum height=\sectionboxheight,
+        mWhite, font=\Huge,
+      ] at (0.5\paperwidth, 0.6\paperheight) {\strut\insertsection\strut};
+    \end{tikzpicture}
+  \end{beamercolorbox}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                           COMMAND DEFINITIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Remove footline on titlepage and correct frame counter
+\renewcommand{\maketitle}{%
+  {%
+    \setbeamertemplate{footline}{}
+    \begin{frame}
+      \titlepage%
+    \end{frame}
+    \addtocounter{framenumber}{-1}
+  }
+}
+
+% Add section cover pages
+\AtBeginSection[]{%
+  \ifsectionpages{%
+    \setbeamertemplate{footline}{}
+    \frame{\sectionpage}
+    \addtocounter{framenumber}{-1}
+  }\fi
+}
+
+% Wideitemize environment
+\newenvironment{wideitemize}{\itemize\addtolength{\itemsep}{10pt}}{\enditemize}
+
+% Backup section commands
+\newcommand{\backupbegin}{%
+   \newcounter{lastframenumber}
+   \setcounter{lastframenumber}{\value{framenumber}}
+   \section{Backup}
+   \setbeamertemplate{headline}{}
+   \setbeamertemplate{footline}{}
+}
+
+\newcommand{\backupend}{%
+   \addtocounter{lastframenumber}{-\value{framenumber}}
+   \addtocounter{framenumber}{\value{lastframenumber}} 
+}
+
+% shadowimages
+\usetikzlibrary{shadows.blur}
+\newcommand\shadowimage[2][]{%
   \begin{tikzpicture}
-    % set up the entire slide as the canvas
-    \useasboundingbox (0,0) rectangle(\paperwidth,\paperheight);
-    \fill[color=myWhite] (-0.3cm,0) rectangle(\paperwidth,\paperheight);
-    \fill[color=myBlue] (-1cm, 0.5\paperheight-1cm) rectangle(\paperwidth, 0.5\paperheight+1cm);
-    \node[text width=\the\paperwidth-1cm,align=center] at (0.4\paperwidth, 0.5\paperheight) {\color{myWhite}\Huge{\insertsection}};
+    \node[anchor=south west, inner sep=0,
+          blur shadow={shadow opacity=35, shadow blur extra rounding}
+         ] (image) at (0,0) {\includegraphics[#1]{#2}};
   \end{tikzpicture}
 }
