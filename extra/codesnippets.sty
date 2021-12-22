@@ -1,0 +1,16 @@
+\ProvidesPackage{codesnippets}[2021/12/22]
+
+\RequirePackage[outputdir=build]{minted}
+\RequirePackage{xcolor}
+
+\definecolor{colorListingBackground}{HTML}{2e3440}
+
+\renewcommand{\theFancyVerbLine}{\sffamily
+\textcolor[rgb]{1.0,1.0,1.0}{%\scriptsize
+\oldstylenums{\arabic{FancyVerbLine}}}}
+
+\setminted{%
+    autogobble=true,
+    bgcolor=colorListingBackground,
+    style=material,
+}

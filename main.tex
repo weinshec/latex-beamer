@@ -1,7 +1,10 @@
-\documentclass[aspectratio=43]{beamer}
+\documentclass[%
+    aspectratio=169,  % [43, 169, 1610]
+]{beamer}
 
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{booktabs}
@@ -9,17 +12,23 @@
 \usepackage{siunitx}
 \sisetup{exponent-product = \cdot}
 
+% _____________________________________________________________________________
+% optional packages                                           OPTIONAL PACKAGES
 \usepackage{feynman}
+\usepackage{codesnippets}
+\usepackage{asciiart}
 
 
 % _____________________________________________________________________________
 % beamer theme                                                     BEAMER THEME
-\usetheme{m4ck}
 
-% option switches (toggle with -true <-> -false)
-\progressbartrue%    enable progressbar at the bottom
-\slidenumberstrue%   enable slidenumbers
-\sectionpagestrue%   enable section cover pages
+\usetheme{console}
+
+% \usetheme[%
+%     progressbar,   % enable progressbar at the bottom
+%     slidenumbers,  % enable slidenumbers
+%     % sectionpages,  % enable section cover pages
+% ]{m4ck}
 
 
 % _____________________________________________________________________________
@@ -51,13 +60,13 @@
   \begin{columns}
     \column{0.5\textwidth}
       \begin{block}{Example Block}
-        \begin{wideitemize}
+        \begin{itemize}
           \item Bullet Point 1
             \begin{itemize}
               \item And some sub item
             \end{itemize}
           \item another one
-        \end{wideitemize}
+        \end{itemize}
         \begin{enumerate}
           \item Enumeration
             \begin{enumerate}
@@ -67,22 +76,67 @@
         \begin{description}
             \item[Key:] Value
         \end{description}
+        \begin{center}
+          \[
+            \sum_i^\infty q^k = \frac{1}{1-q}
+          \]
+        \end{center}
       \end{block}
     \column{0.5\textwidth}
       \begin{figure}[ht]
         \centering
-        \shadowimage[width=0.9\textwidth]{JGU.pdf}
+        \shadowimage[width=0.9\textwidth]{img/plot.pdf}
         \caption{Logo of the university}
       \end{figure}
   \end{columns}
 \end{frame}
 
 
-\begin{frame}{Another Slide}
+\begin{frame}[fragile]{[extra] listings.sty}
+    \begin{minted}[linenos]{python}
+        # read json from stdin
+        try:
+            message = json.loads(line)
+        except json.decoder.JSONDecodeError as e:
+            sys.exit(1)
+    \end{minted}
+\end{frame}
+
+
+\begin{frame}[fragile]{[extra] asciiart.sty}
+    \begin{lstlisting}
+        ┌─────────────┐
+        │ SOME BOX 01 ├─────┐
+        │ (primary)   │     │
+        └─────────────┘     │
+                            │    ┌─────────────┐
+        ┌─────────────┐     └───►│             │
+        │ SOME BOX 02 ├─────────►│ Combinator0 ├────► Result
+        │ (secondary) │     ┌───►│             │
+        └─────────────┘     │    └─────────────┘
+                            │
+        ┌─────────────┐     │
+        │ SOME BOX 03 ├─────┘
+        │ (fallback)  │
+        └─────────────┘
+    \end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{[extra] feynman.sty}
   \begin{center}
-    \[
-      \sum_i^\infty q^k = \frac{1}{1-q}
-    \]
+    \begin{tikzpicture}[scale=1.5]
+      \node[vertex]  (v1) at (0,0) {};
+      \node[vertex]  (v2) at (0.75, 0.5) {};
+      \node[vertex]  (v3) at (0.75,-0.5) {};
+
+      \draw[scalar]  (v1) -- ++(-1,0);
+      \draw[fermion] (v1) -- (v2);
+      \draw[fermion] (v2) -- (v3);
+      \draw[fermion] (v3) -- (v1);
+      \draw[vector]  (v2) -- ++(1,0);
+      \draw[vector]  (v3) -- ++(1,0);
+    \end{tikzpicture}
   \end{center}
 \end{frame}
 

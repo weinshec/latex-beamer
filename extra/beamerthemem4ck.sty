@@ -1,23 +1,28 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                       GENERAL
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ProvidesPackage{beamerthemem4ck}[2021/12/22]
+
 \mode<presentation>
 \setbeamercovered{transparent = invisible}
 
-\usepackage{xcolor}
-
-\usepackage{tikz}
+\RequirePackage{xcolor}
+\RequirePackage{beamer_shared}
+\RequirePackage{tikz}
 \usetikzlibrary{calc}
 
-% theme options
-\newif\ifprogressbar\progressbartrue%
-\newif\ifslidenumbers\slidenumberstrue%
-\newif\ifsectionpages\sectionpagestrue%
+
+% _____________________________________________________________________________
+% theme options                                                   THEME OPTIONS
+\newif\ifprogressbar\progressbarfalse%
+\newif\ifslidenumbers\slidenumbersfalse%
+\newif\ifsectionpages\sectionpagesfalse%
+\DeclareOption{progressbar}{\progressbartrue}
+\DeclareOption{slidenumbers}{\slidenumberstrue}
+\DeclareOption{sectionpages}{\sectionpagestrue}
+\ProcessOptions
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                             COLOR DEFINITIONS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% _____________________________________________________________________________
+% color definitions                                           COLOR DEFINITIONS
+
 \definecolor{mBlue}{RGB}{81,132,217}
 \definecolor{mOrange}{RGB}{255,156,0}
 \definecolor{mBlack}{RGB}{65,65,65}
@@ -44,9 +49,9 @@
 \setbeamercolor{footline}         {fg=mTextGray}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                   INNER THEME
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% _____________________________________________________________________________
+% inner theme                                                       INNER THEME
+
 \setbeamertemplate{itemize item}{%
   \tikz{%
     \draw[fill=mPrimary,draw=none] (0, 0) rectangle (0.1, 0.1);
@@ -79,9 +84,8 @@
 \usefonttheme[onlymath]{serif}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                   OUTER THEME
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% _____________________________________________________________________________
+% outer theme                                                       OUTER THEME
 
 % progress bar calculations
 \makeatletter
@@ -115,7 +119,7 @@
         (0, 0.5mm) rectangle (\paperwidth, \frametitleheight);
       \node[anchor=west, font=\LARGE, frametitle.fg] at
         (0, 0.5\frametitleheight) {\strut\insertframetitle\strut};
-      \shade[top color=mGray!75, bottom color=transparent!0]
+      \shade[top color=mGray!50, bottom color=transparent!0]
         (0, 0) rectangle (\paperwidth, 1mm);
     \end{tikzpicture}
   \end{beamercolorbox}
@@ -186,27 +190,6 @@
   \end{beamercolorbox}
 }
 
-% section cover page theme
-\setbeamertemplate{section page}{%
-  \nointerlineskip%
-  \begin{beamercolorbox}[wd=\paperwidth, ht=\paperheight]{}
-    \begin{tikzpicture}
-      \useasboundingbox (0,0) rectangle (\paperwidth,\paperheight);
-      \node[%
-        fill=mPrimary,
-        minimum width=\paperwidth,
-        minimum height=\sectionboxheight,
-        mWhite, font=\Huge,
-      ] at (0.5\paperwidth, 0.6\paperheight) {\strut\insertsection\strut};
-    \end{tikzpicture}
-  \end{beamercolorbox}
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                           COMMAND DEFINITIONS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 % Remove footline on titlepage and correct frame counter
 \renewcommand{\maketitle}{%
   {%
@@ -218,6 +201,22 @@
   }
 }
 
+% section cover page theme
+\setbeamertemplate{section page}{%
+  \nointerlineskip%
+  \begin{beamercolorbox}[wd=\paperwidth, ht=\paperheight]{}
+    \begin{tikzpicture}
+      \useasboundingbox (0,0) rectangle (\paperwidth,\paperheight);
+      \node[%
+        fill=mPrimary,
+        minimum width=\paperwidth,
+        minimum height=\sectionboxheight,
+        text=mWhite, font=\Huge,
+      ] at (0.5\paperwidth, 0.6\paperheight) {\strut\insertsection\strut};
+    \end{tikzpicture}
+  \end{beamercolorbox}
+}
+
 % Add section cover pages
 \AtBeginSection[]{%
   \ifsectionpages{%
@@ -225,31 +224,4 @@
     \frame{\sectionpage}
     \addtocounter{framenumber}{-1}
   }\fi
-}
-
-% Wideitemize environment
-\newenvironment{wideitemize}{\itemize\addtolength{\itemsep}{10pt}}{\enditemize}
-
-% Backup section commands
-\newcommand{\backupbegin}{%
-   \newcounter{lastframenumber}
-   \setcounter{lastframenumber}{\value{framenumber}}
-   \section{Backup}
-   \setbeamertemplate{headline}{}
-   \setbeamertemplate{footline}{}
-}
-
-\newcommand{\backupend}{%
-   \addtocounter{lastframenumber}{-\value{framenumber}}
-   \addtocounter{framenumber}{\value{lastframenumber}} 
-}
-
-% shadowimages
-\usetikzlibrary{shadows.blur}
-\newcommand\shadowimage[2][]{%
-  \begin{tikzpicture}
-    \node[anchor=south west, inner sep=0,
-          blur shadow={shadow opacity=35, shadow blur extra rounding}
-         ] (image) at (0,0) {\includegraphics[#1]{#2}};
-  \end{tikzpicture}
 }

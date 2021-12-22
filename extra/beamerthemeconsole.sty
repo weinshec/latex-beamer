@@ -1,0 +1,82 @@
+\ProvidesPackage{beamerthemeconsole}[2013/05/16 ]
+
+\mode<presentation>
+
+\RequirePackage{beamer_shared}
+\RequirePackage{svgcolor}
+
+\newbox\kmbmr@tmpboxa
+\newbox\kmbmr@tmpboxb
+
+
+\setbeamertemplate{sections/subsections in toc}[sections numbered]{}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{qed symbol}{}
+
+% _____________________________________________________________________________
+% color definitions                                           COLOR DEFINITIONS
+\definecolor{cBackground}{HTML}{1F2936}
+
+\definecolor{chartreuse}{HTML}{7FFF00}
+\definecolor{tomato}{HTML}{FF6347}
+\definecolor{whiteee}{HTML}{EEEEEC}
+\definecolor{gold}{HTML}{FFD700}
+
+\setbeamercolor*{background canvas}{bg=cBackground}
+\setbeamercolor*{normal text}{fg=whiteee}
+\setbeamercolor*{alerted text}{fg=tomato}
+\setbeamercolor*{structure}{fg=gold}
+\setbeamercolor*{title}{fg=chartreuse}
+\setbeamercolor*{frametitle}{fg=chartreuse}
+\setbeamercolor*{itemize item}{fg=chartreuse}
+\setbeamercolor*{enumerate item}{fg=chartreuse}
+
+% _____________________________________________________________________________
+% fonts                                                                   FONTS
+\usefonttheme{professionalfonts}
+\def\familydefault{\ttdefault}
+
+% _____________________________________________________________________________
+% inner theme                                                       INNER THEME
+\setbeamerfont{alerted text}{series=\bfseries}
+\setbeamerfont{structure}{series=\bfseries}
+\setbeamerfont{title}{size=\normalsize,series=\bfseries}
+\setbeamerfont{frametitle}{size=\normalsize,series=\bfseries}
+\setbeamerfont{block title}{size=\normalsize,series=\bfseries}
+\setbeamerfont{footline}{size*={5}{\z@},series=\bfseries}
+
+\setbeamertemplate{itemize item}{*}
+\setbeamertemplate{itemize subitem}{*}
+\setbeamertemplate{itemize subsubitem}{*}
+\setbeamertemplate{frametitle}{{\usebeamercolor[fg]{normal text}\texttt{\mdseries >\hbox{}>\hbox{}> }}\boldmath\insertframetitle}
+\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}{
+  \setbox\kmbmr@tmpboxa\hbox{[\ifnum\insertsectionnumber>0\boldmath\insertshorttitle/\insertsectionnumber\_\insertsection\else\char"7E\fi]\$~\_}
+  \setbox\kmbmr@tmpboxb\hbox{[\insertframenumber/\inserttotalframenumber]}
+  \ht\kmbmr@tmpboxa=1mm\dp\kmbmr@tmpboxa=0mm
+  \ht\kmbmr@tmpboxb=1mm\dp\kmbmr@tmpboxb=0mm
+  \vspace{5.2mm}
+  \hspace{2mm}\noindent\box\kmbmr@tmpboxa\hfill\box\kmbmr@tmpboxb\hspace{2mm}
+  \vspace{1.3mm}
+}
+
+% _____________________________________________________________________________
+% outer theme                                                       OUTER THEME
+
+\setbeamersize{text margin left=2mm,text margin right=2mm}
+
+\setbeamertemplate{title page}{
+  \renewcommand\thefootnote{\fnsymbol{footnote}}
+  \setcounter{footnote}{1} % \dagger
+  \noindent >\hbox{}>\hbox{}> {\usebeamerfont{title}\usebeamercolor[fg]{title}\bfseries\boldmath\inserttitle}
+  \ifx\insertsubtitle\@empty\else\\>\hbox{}>\hbox{}> {\usebeamerfont{title}\usebeamercolor[fg]{title}\insertsubtitle}\fi~\\[1em]
+  Name: \insertauthor\ \ifx\insertinstitute\@empty\else(\insertinstitute)\fi\\
+  Date: \insertdate
+  \renewcommand\thefootnote{\arabic{footnote}}
+  \setcounter{footnote}{0}
+}
+
+\mode
+<all>
+
+\endinput

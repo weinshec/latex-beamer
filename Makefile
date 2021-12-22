@@ -11,7 +11,7 @@ TEX_FILES   = ${PWD}/${PROJECT}.tex
 EXTRA_FILES = $(shell find ${EXTRA} -type f -name '*')
 IMG_FILES   = $(shell find ${IMG} -type f -name '*')
 
-LATEX_CMD   = xelatex
+LATEX_CMD   = pdflatex
 LATEX_FLAGS = -shell-escape -halt-on-error -file-line-error -output-directory ${BUILD}
 PDF_VIEWER  = zathura
 

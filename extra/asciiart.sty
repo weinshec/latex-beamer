@@ -1,0 +1,28 @@
+\ProvidesPackage{asciiart}[2021/12/22]
+
+\RequirePackage{listings}
+\RequirePackage{pmboxdraw}
+\RequirePackage{pifont}
+
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  keepspaces,
+  literate=
+    {┌}{\textSFi}1%
+    {└}{\textSFii}1%
+    {┐}{\textSFiii}1%
+    {┘}{\textSFiv}1%
+    {│}{\textSFxi}1%
+    {─}{\textSFx}1%
+    {▲}{\hspace{-0.1em}$\blacktriangle$\hspace{-0.1em}}1%
+    {►}{\hspace{-0.125em}$\blacktriangleright$\hspace{-0.125em}}1%
+    {▼}{\hspace{-0.1em}$\blacktriangledown$\hspace{-0.1em}}1%
+    {◄}{\hspace{-0.125em}$\blacktriangleleft$\hspace{-0.125em}}1%
+    {┬}{\textSFvi}1%
+    {┴}{\textSFvii}1%
+    {├}{\textSFviii}1%
+    {┤}{\textSFix}1%
+    {┼}{\textSFv}1%
+}
+

@@ -1,0 +1,32 @@
+\ProvidesPackage{beamer_shared}[2021/12/22]
+
+\RequirePackage{tikz}
+
+
+% Wideitemize environment
+\newenvironment{wideitemize}{\itemize\addtolength{\itemsep}{10pt}}{\enditemize}
+
+
+% shadowimages
+\usetikzlibrary{shadows.blur}
+\newcommand\shadowimage[2][]{%
+  \begin{tikzpicture}
+    \node[anchor=south west, inner sep=3,
+          blur shadow={shadow opacity=20, shadow blur extra rounding}
+         ] (image) at (0,0) {\includegraphics[#1]{#2}};
+  \end{tikzpicture}
+}
+
+
+% Backup section commands
+\newcommand{\backupbegin}{%
+   \newcounter{lastframenumber}
+   \setcounter{lastframenumber}{\value{framenumber}}
+   \section{Backup}
+   \setbeamertemplate{headline}{}
+   \setbeamertemplate{footline}{}
+}
+\newcommand{\backupend}{%
+   \addtocounter{lastframenumber}{-\value{framenumber}}
+   \addtocounter{framenumber}{\value{lastframenumber}} 
+}
